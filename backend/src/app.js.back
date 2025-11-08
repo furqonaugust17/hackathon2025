@@ -1,0 +1,79 @@
+import express from "express";
+import multer from "multer";
+import { PDFParse } from "pdf-parse";
+import generateSceneFromText from "./services/ai.js";
+import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+// setup multer
+const upload = multer({ dest: "uploads/" });
+
+app.post("/api/generate_scene", upload.single("file"), async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+
+        const pdfBuffer = req.file.buffer || fs.readFileSync(req.file.path);
+        const pdfData = new PDFParse({ data: pdfBuffer });
+        const text = await pdfData.getText();
+
+        // const scene = await generateSceneFromText(text.text);
+        // if (!scene) return res.status(500).json({ error: "AI failed to generate scene" });
+
+        res.json({
+            "label": "office_meeting",
+            "background": "office_desk.png",
+            "sound": "page_turn.wav",
+            "dialogs": [
+                {
+                    "character": "MHS",
+                    "expression": "neutral",
+                    "text": "Selamat pagi semua, saya siap mempresentasikan proyek saya."
+                },
+                {
+                    "character": "DOSEN_P",
+                    "expression": "serious",
+                    "text": "Baik, mulai dari metodologi. Kenapa memilih Waterfall, bukan Agile?"
+                },
+            ],
+            "choices": [
+                {
+                    "text": "Tunjukkan diagram alur sistem",
+                    "goto": "show_flowchart"
+                },
+                {
+                    "text": "Jelaskan database lebih detail",
+                    "goto": "explain_database"
+                }
+            ],
+            "dialogs": [
+                {
+                    "character": "MHS",
+                    "expression": "nervous",
+                    "text": "Karena kebutuhan sistem sudah jelas sejak awal, dan proyek ini punya deadline ketat."
+                },
+                {
+                    "character": "DOSEN_A",
+                    "expression": "curious",
+                    "text": "Bagaimana Anda memastikan tidak ada revisi yang terlewat?"
+                },
+                {
+                    "character": "MHS",
+                    "expression": "confident",
+                    "text": "Kami melakukan review mendalam dengan stakeholder sebelum pengembangan."
+                }
+            ]
+        }
+        );
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+app.listen(port, () => {
+    console.log(`Backend running on port ${port}`);
+});
