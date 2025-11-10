@@ -24,8 +24,8 @@ async function getQuestionsFromAI(text) {
     // 2. Prompt Engineering untuk Chat Completions
     // Kita 'paksa' AI untuk HANYA mengembalikan JSON.
     const systemPrompt = `Kamu adalah AI penulis dialog untuk simulasi sidang skripsi yang berisi 3 dosen dan 1 mahasiswa. 
-Buat lima pertanyaan akademis berbasis skripsi atau topik penelitian (misalnya topik AI, data, sistem informasi, dll). 
-Setiap pertanyaan harus memiliki 4 opsi jawaban (A–D), dan tentukan jawaban yang benar.
+Buat lima pertanyaan akademis berbasis skripsi atau topik penelitian dari file pdf yang di upload. 
+Setiap pertanyaan harus memiliki 4 opsi jawaban (A-D), dan tentukan jawaban yang benar.
 
 Setelah itu, buat percakapan berbentuk JSON seperti di bawah ini:
 - Jika mahasiswa menjawab benar, 3 dosen akan memberikan respons yang berbeda:
