@@ -1,0 +1,222 @@
+[
+  {
+    "question": "Berdasarkan batasan produk yang disebutkan, apa yang menjadi fokus utama dari sistem Pasar3D?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Membangun processor pembayaran sendiri"
+      },
+      {
+        "key": "B",
+        "text": "Memfasilitasi transaksi jual-beli aset 3D digital dan jasa render"
+      },
+      {
+        "key": "C",
+        "text": "Mengembangkan antarmuka admin yang custom"
+      },
+      {
+        "key": "D",
+        "text": "Mengakses database langsung dari frontend"
+      }
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Bagaimana komunikasi antara Frontend (Next.js) dan Backend (WordPress) diatur dalam sistem ini?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Akses database langsung dari frontend diperbolehkan"
+      },
+      {
+        "key": "B",
+        "text": "Menggunakan shared database connection"
+      },
+      {
+        "key": "C",
+        "text": "Hanya diizinkan melalui API (REST atau GraphQL)"
+      },
+      {
+        "key": "D",
+        "text": "Menggunakan file sharing system"
+      }
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "Apa peran WordPress dalam arsitektur headless CMS Pasar3D?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sebagai frontend utama untuk pengguna"
+      },
+      {
+        "key": "B",
+        "text": "Sebagai backend (penyedia data) headless"
+      },
+      {
+        "key": "C",
+        "text": "Sebagai processor pembayaran"
+      },
+      {
+        "key": "D",
+        "text": "Sebagai database management system utama"
+      }
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Apa yang dimaksud dengan Custom Post Type (CPT) dalam konteks sistem ini?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Fitur untuk membuat tipe konten kustom seperti 'Aset', 'PesananRender'"
+      },
+      {
+        "key": "B",
+        "text": "Template untuk email marketing"
+      },
+      {
+        "key": "C",
+        "text": "Custom payment processor"
+      },
+      {
+        "key": "D",
+        "text": "Interface untuk moderasi admin"
+      }
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Antarmuka apa yang akan digunakan oleh Admin untuk moderasi platform?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Antarmuka frontend Next.js custom"
+      },
+      {
+        "key": "B",
+        "text": "Dashboard standar WordPress (/wp-admin)"
+      },
+      {
+        "key": "C",
+        "text": "Mobile application khusus"
+      },
+      {
+        "key": "D",
+        "text": "Command line interface"
+      }
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Siapa yang akan menggunakan antarmuka frontend yang dibangun dengan Next.js?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Hanya Admin saja"
+      },
+      {
+        "key": "B",
+        "text": "Hanya Vendor saja"
+      },
+      {
+        "key": "C",
+        "text": "Klien dan Vendor"
+      },
+      {
+        "key": "D",
+        "text": "Hanya Klien saja"
+      }
+    ],
+    "correct_answer": "C"
+  },
+  {
+    "question": "Apa fungsi WP REST API dalam sistem Pasar3D?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sebagai processor pembayaran"
+      },
+      {
+        "key": "B",
+        "text": "Mengekspos data WordPress dalam format JSON"
+      },
+      {
+        "key": "C",
+        "text": "Sebagai database management system"
+      },
+      {
+        "key": "D",
+        "text": "Membangun frontend interface"
+      }
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Bagaimana sistem menangani proses pembayaran?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Membangun processor pembayaran sendiri"
+      },
+      {
+        "key": "B",
+        "text": "Berintegrasi dengan Payment Gateway pihak ketiga"
+      },
+      {
+        "key": "C",
+        "text": "Menggunakan sistem manual transfer bank"
+      },
+      {
+        "key": "D",
+        "text": "Tidak ada sistem pembayaran"
+      }
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Apa yang membedakan peran 'Vendor' dengan 'Klien' dalam sistem?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Vendor menggunakan WordPress role 'Vendor', Klien menggunakan role 'Subscriber' atau 'Customer'"
+      },
+      {
+        "key": "B",
+        "text": "Tidak ada perbedaan, semua pengguna sama"
+      },
+      {
+        "key": "C",
+        "text": "Vendor hanya bisa membeli, Klien hanya bisa menjual"
+      },
+      {
+        "key": "D",
+        "text": "Vendor menggunakan Next.js, Klien menggunakan WordPress"
+      }
+    ],
+    "correct_answer": "A"
+  },
+  {
+    "question": "Framework apa yang digunakan untuk membangun frontend Pasar3D?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Laravel"
+      },
+      {
+        "key": "B",
+        "text": "Django"
+      },
+      {
+        "key": "C",
+        "text": "Next.js"
+      },
+      {
+        "key": "D",
+        "text": "Vue.js"
+      }
+    ],
+    "correct_answer": "C"
+  }
+]
