@@ -1,120 +1,336 @@
 [
   {
-    "question": "Apa yang dimaksud dengan sistem informasi pengelolaan bisnis penggadaian pada PT. Usaha Gadai Mandiri?",
+    "question": "Metode pengembangan sistem apa yang secara konsisten digunakan di ketiga kajian pustaka yang disebutkan (UD Sido Asih, Fellanova Furniture, Toko Furniture Bahagia)?",
     "options": [
       {
         "key": "A",
-        "text": "Sistem informasi yang digunakan untuk mengelola data nasabah dan transaksi"
+        "text": "Agile"
       },
       {
         "key": "B",
-        "text": "Sistem informasi yang digunakan untuk mengelola data penggadaian dan aset"
+        "text": "Scrum"
       },
       {
         "key": "C",
-        "text": "Sistem informasi yang digunakan untuk mengelola data pelanggan dan produk"
-      },
-      {
-        "key": "D",
-        "text": "Sistem informasi yang digunakan untuk mengelola data keuangan dan akuntansi"
+        "text": "Waterfall"
       }
     ],
-    "correct_answer": "A",
+    "correct_answer": "C",
     "responses": {
       "correct": {
         "dosen1": [
-          "Sistem informasi yang dimaksud adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi pada PT. Usaha Gadai Mandiri.",
-          "Baik, Anda mengerti konsep tersebut."
+          "(Menghela napas pelan) Akhirnya ada yang benar."
         ],
         "dosen2": [
-          "Hmm, sistem informasi pengelolaan bisnis penggadaian, ya, itu untuk mengelola data nasabah dan transaksi.",
-          "Sangat bagus, Anda memiliki pemahaman yang baik."
+          ""
         ],
         "dosen3": [
-          "Dengan adanya sistem informasi, pengelolaan data nasabah dan transaksi dapat menjadi lebih efektif.",
-          "Baik, Anda telah memahami konsep tersebut."
+          ""
         ],
         "mahasiswa": [
-          "Saya berharap jawaban saya benar, saya telah mencoba menjawab dengan baik.",
-          "Terima kasih, saya akan terus berusaha."
+          "Alhamdulillah, Pak."
         ]
       },
       "incorrect": {
         "dosen1": [
-          "Maaf, jawaban Anda salah, sistem informasi pengelolaan bisnis penggadaian sebenarnya adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi.",
-          "Anda perlu memperbaiki pengetahuan Anda tentang sistem informasi."
+          ""
         ],
         "dosen2": [
-          "Oh, saya tidak pikir jawaban Anda salah, tapi saya rasa Anda harus memperbaiki pengetahuan Anda tentang sistem informasi.",
-          "Tidak apa-apa, kita semua membuat kesalahan, tapi Anda harus belajar dari kesalahan tersebut."
+          "(Tersenyum miring) Coba lihat di bab berapa itu?"
         ],
         "dosen3": [
-          "Sayangnya, jawaban Anda salah, sistem informasi pengelolaan bisnis penggadaian sebenarnya adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi.",
-          "Anda perlu memperbaiki pengetahuan Anda tentang sistem informasi untuk dapat lebih baik."
+          "Anda yakin dengan jawaban itu?"
         ],
         "mahasiswa": [
-          "Saya tidak tahu apa yang salah, saya telah mencoba menjawab dengan baik.",
-          "Terima kasih, saya akan terus berusaha."
+          "(Menunduk) Maaf, Pak."
         ]
       }
     }
   },
   {
-    "question": "Apa yang dimaksud dengan WhatsApp Gateway dalam konteks sistem informasi pengelolaan bisnis penggadaian?",
+    "question": "Kajian pustaka manakah yang secara spesifik menyebutkan penggunaan framework Laravel dalam pengembangannya?",
     "options": [
       {
         "key": "A",
-        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan"
+        "text": "Sistem Informasi Penjualan Online Furniture Berbasis Website UD Sido Asih"
       },
       {
         "key": "B",
-        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi"
+        "text": "Rancang Bangun Sistem Informasi Penjualan Furniture pada Fellanova Furniture Berbasis Web"
       },
       {
         "key": "C",
-        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengelola data keuangan dan akuntansi"
-      },
-      {
-        "key": "D",
-        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengelola data produk dan layanan"
+        "text": "Perancangan Sistem Informasi Dalam Penjualan Pada Toko Furniture Bahagia Berbasis Web"
       }
     ],
-    "correct_answer": "A",
+    "correct_answer": "B",
     "responses": {
       "correct": {
         "dosen1": [
-          "WhatsApp Gateway adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan, baik melalui pesan teks atau pesan suara.",
-          "Baik, Anda telah memahami konsep tersebut."
+          ""
         ],
         "dosen2": [
-          "Hmm, WhatsApp Gateway, ya, itu untuk mengirimkan notifikasi kepada pelanggan.",
-          "Sangat bagus, Anda memiliki pemahaman yang baik."
+          "(Tertawa kecil) Sudah belajar sampai framework, ya."
         ],
         "dosen3": [
-          "Dengan adanya WhatsApp Gateway, pengelolaan notifikasi kepada pelanggan dapat menjadi lebih efektif.",
-          "Baik, Anda telah memahami konsep tersebut."
+          "Tepat sekali, itu ada di kajian pustaka."
         ],
         "mahasiswa": [
-          "Saya berharap jawaban saya benar, saya telah mencoba menjawab dengan baik.",
-          "Terima kasih, saya akan terus berusaha."
+          "Terima kasih, Bu."
         ]
       },
       "incorrect": {
         "dosen1": [
-          "Maaf, jawaban Anda salah, WhatsApp Gateway sebenarnya adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan.",
-          "Anda perlu memperbaiki pengetahuan Anda tentang WhatsApp Gateway."
+          "Jangan asal tembak, baca lagi Bab II."
         ],
         "dosen2": [
-          "Oh, saya tidak pikir jawaban Anda salah, tapi saya rasa Anda harus memperbaiki pengetahuan Anda tentang WhatsApp Gateway.",
-          "Tidak apa-apa, kita semua membuat kesalahan, tapi Anda harus belajar dari kesalahan tersebut."
+          ""
         ],
         "dosen3": [
-          "Sayangnya, jawaban Anda salah, WhatsApp Gateway sebenarnya adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan.",
-          "Anda perlu memperbaiki pengetahuan Anda tentang WhatsApp Gateway untuk dapat lebih baik."
+          ""
         ],
         "mahasiswa": [
-          "Saya tidak tahu apa yang salah, saya telah mencoba menjawab dengan baik.",
-          "Terima kasih, saya akan terus berusaha."
+          "(Panik) Mohon maaf, Pak."
+        ]
+      }
+    }
+  },
+  {
+    "question": "Menurut referensi [4] yang dikutip dalam teks, apa definisi dari Sistem Informasi?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Kumpulan perangkat lunak untuk mengelola data dan laporan."
+      },
+      {
+        "key": "B",
+        "text": "Himpunan komponen yang saling berkaitan untuk mendukung pengambilan keputusan."
+      },
+      {
+        "key": "C",
+        "text": "Proses manual pencatatan dan distribusi informasi secara terstruktur."
+      }
+    ],
+    "correct_answer": "B",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          ""
+        ],
+        "dosen2": [
+          ""
+        ],
+        "dosen3": [
+          "Ya, definisi itu sudah sesuai referensi."
+        ],
+        "mahasiswa": [
+          "Betul, Pak. Sesuai kutipan."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          "Itu jawaban umum, bukan definisi menurut [4]."
+        ],
+        "dosen2": [
+          "(Berdehem kecil) Referensinya dibaca tidak?"
+        ],
+        "dosen3": [
+          ""
+        ],
+        "mahasiswa": [
+          "(Gugup) Sepertinya saya salah ingat, Pak."
+        ]
+      }
+    }
+  },
+  {
+    "question": "Berdasarkan teks, apa salah satu keunggulan utama aplikasi berbasis web dibandingkan aplikasi desktop?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Membutuhkan instalasi program secara lokal dengan berbagai pengaturan rumit."
+      },
+      {
+        "key": "B",
+        "text": "Mudah diakses oleh pengguna melalui browser tanpa instalasi lokal."
+      },
+      {
+        "key": "C",
+        "text": "Hanya dapat diakses melalui perangkat tertentu yang kompatibel."
+      }
+    ],
+    "correct_answer": "B",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          ""
+        ],
+        "dosen2": [
+          "(Menyilangkan tangan) Lumayan, tidak terlalu meleset."
+        ],
+        "dosen3": [
+          "Itu memang keuntungan utamanya."
+        ],
+        "mahasiswa": [
+          "Iya, Bu, kemudahan aksesnya."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          "Coba bedakan web dan desktop, jangan terbalik."
+        ],
+        "dosen2": [
+          ""
+        ],
+        "dosen3": [
+          ""
+        ],
+        "mahasiswa": [
+          "(Meringis) Oh iya, itu kelemahan desktop, Pak."
+        ]
+      }
+    }
+  },
+  {
+    "question": "Dalam konteks pengembangan web, apa peran utama HyperText Markup Language (HTML) seperti yang dijelaskan dalam teks?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sebagai bahasa pemrograman sisi server yang menyatu dengan HTML."
+      },
+      {
+        "key": "B",
+        "text": "Untuk menentukan tata tampilan web atau informasi statis."
+      },
+      {
+        "key": "C",
+        "text": "Sebagai framework berbasis MVC untuk meningkatkan kualitas perangkat lunak."
+      }
+    ],
+    "correct_answer": "B",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          "Cukup presisi, tidak ngawur."
+        ],
+        "dosen2": [
+          ""
+        ],
+        "dosen3": [
+          ""
+        ],
+        "mahasiswa": [
+          "Sesuai yang saya pahami, Pak."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          ""
+        ],
+        "dosen2": [
+          "(Menggeleng pelan) Itu kan definisi PHP atau Laravel. Keliru, 'kan?"
+        ],
+        "dosen3": [
+          "Tampaknya Anda mencampuradukkan konsep."
+        ],
+        "mahasiswa": [
+          "(Menunduk) Maaf, Pak. Saya salah."
+        ]
+      }
+    }
+  },
+  {
+    "question": "Menurut teks, apa definisi dari MySQL?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sebuah bahasa pemrograman untuk antarmuka pengguna web."
+      },
+      {
+        "key": "B",
+        "text": "Framework pengembangan situs web berbasis MVC."
+      },
+      {
+        "key": "C",
+        "text": "Database Management System (DBMS) open source yang mendukung multiuser."
+      }
+    ],
+    "correct_answer": "C",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          ""
+        ],
+        "dosen2": [
+          ""
+        ],
+        "dosen3": [
+          "Definisi yang tepat untuk MySQL."
+        ],
+        "mahasiswa": [
+          "Iya, itu tertulis di Bab 2, Pak."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          "Anda tidak membaca bagian MySQL dengan seksama."
+        ],
+        "dosen2": [
+          ""
+        ],
+        "dosen3": [
+          "Itu bukan MySQL, coba cek lagi."
+        ],
+        "mahasiswa": [
+          "(Gugup) Salah ya, Pak? Maaf."
+        ]
+      }
+    }
+  },
+  {
+    "question": "Apa tujuan utama seorang analis sistem menggunakan Flowchart dalam perancangan sistem?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Untuk merancang tampilan antarmuka pengguna secara visual."
+      },
+      {
+        "key": "B",
+        "text": "Sebagai bukti dokumentasi untuk menjelaskan gambaran logis sistem kepada programmer."
+      },
+      {
+        "key": "C",
+        "text": "Untuk membuat laporan keuangan otomatis."
+      }
+    ],
+    "correct_answer": "B",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          "Jawaban yang cukup baik."
+        ],
+        "dosen2": [
+          ""
+        ],
+        "dosen3": [
+          ""
+        ],
+        "mahasiswa": [
+          "Terima kasih, Pak."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          ""
+        ],
+        "dosen2": [
+          "(Tersenyum miring) Sudah baca bab terakhir belum?"
+        ],
+        "dosen3": [
+          "Fungsinya bukan itu, silakan diperbaiki."
+        ],
+        "mahasiswa": [
+          "(Menunduk) Maaf, Pak."
         ]
       }
     }

@@ -2,8 +2,9 @@ import express from "express";
 import multer from "multer";
 import { PDFParse } from "pdf-parse";
 import fs from "fs";
-import axios from "axios";
 import "dotenv/config";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+
 
 const app = express();
 const port = 3000;
@@ -11,7 +12,20 @@ const port = 3000;
 // Konfigurasi Multer untuk menyimpan file sementara
 const upload = multer({ dest: "uploads/" });
 
+async function simpanKeFile(teks, namaFile) {
+  try {
+    // 'writeFile' akan membuat/menimpa file
+    fs.writeFileSync(namaFile, teks, 'utf8');
+    console.log(`File '${namaFile}' berhasil disimpan.`);
+  } catch (err) {
+    console.error(`Gagal menyimpan file: ${err}`);
+  }
+}
+
 function extractRelevantText(fullText) {
+  console.log("Memulai ekstraksi teks relevan...");
+
+  // 1. Daftar bab yang KITA INGINKAN (Whitelist)
   const keywords = [
     "LANDASAN TEORI",
     "TINJAUAN PUSTAKA",
@@ -26,32 +40,43 @@ function extractRelevantText(fullText) {
 
   let processedText = fullText;
 
+  // --- LANGKAH 1: Temukan Titik Potong Awal (BAB I Terakhir) ---
   const bab1Regex = /\bBAB\s+I\b/ig;
-
   const bab1Matches = [...processedText.matchAll(bab1Regex)];
+  let bab1StartIndex = 0;
 
   if (bab1Matches.length > 0) {
     const lastBab1Match = bab1Matches[bab1Matches.length - 1];
-    processedText = processedText.substring(lastBab1Match.index);
+    bab1StartIndex = lastBab1Match.index;
+    console.log(`Menemukan ${bab1Matches.length} 'BAB I'. Menggunakan yang terakhir di ${bab1StartIndex}.`);
+  } else {
+    console.warn("Keyword 'BAB I' yang asli tidak ditemukan. Filter mungkin tidak akurat.");
   }
 
+  // --- LANGKAH 2: Temukan Titik Potong Akhir (Daftar Pustaka/Lampiran Terakhir) ---
   const endKeywords = ["DAFTAR PUSTAKA", "LAMPIRAN"];
-  let earliestCutOff = -1;
+  let endOfDocIndex = processedText.length;
 
   for (const keyword of endKeywords) {
-    const regex = new RegExp(keyword, "i");
-    const match = processedText.match(regex);
-    if (match) {
-      if (earliestCutOff === -1 || match.index < earliestCutOff) {
-        earliestCutOff = match.index;
+    const endRegex = new RegExp(keyword, "ig");
+    const endMatches = [...processedText.matchAll(endRegex)];
+
+    if (endMatches.length > 0) {
+      const lastEndMatch = endMatches[endMatches.length - 1];
+      if (lastEndMatch.index > bab1StartIndex && lastEndMatch.index < endOfDocIndex) {
+        endOfDocIndex = lastEndMatch.index;
       }
     }
   }
 
-  if (earliestCutOff !== -1) {
-    processedText = processedText.substring(0, earliestCutOff);
+  if (endOfDocIndex < processedText.length) {
+    console.log(`Membersihkan teks setelah (Daftar Pustaka/Lampiran) di ${endOfDocIndex}`);
   }
 
+  // --- LANGKAH 3: Buat "Sandwich" Teks Bersih ---
+  processedText = processedText.substring(bab1StartIndex, endOfDocIndex);
+
+  // --- LANGKAH 4: Jalankan Logika Asli Anda pada Teks Bersih ---
   const chapterRegex = /(?=BAB\s+(?:[IVXLCDM]+|\d+))/i;
   const allSections = processedText.split(chapterRegex);
 
@@ -59,78 +84,103 @@ function extractRelevantText(fullText) {
   let chaptersFound = [];
 
   for (let i = 0; i < allSections.length; i++) {
-    const section = allSections[i];
+    let section = allSections[i];
 
     if (section.trim() === "") continue;
 
+    // Normalisasi header
     const sectionHeaderRaw = section.substring(0, 300).toUpperCase();
     const sectionHeader = sectionHeaderRaw.replace(/\s+/g, " ");
 
+    // Cek Whitelist
     if (keywords.some(keyword => sectionHeader.includes(keyword))) {
-      relevantText += section + "\n\n";
+      console.log(`MENEMUKAN BAB RELEVAN: ${sectionHeader.substring(0, 50)}...`);
+
+      // --- PERBAIKAN: Membersihkan Teks Bab ---
+
+      // 1. Hapus footer halaman (misal: -- 20 of 99 --)
+      let cleanedSection = section.replace(/-- \d+ of \d+ --/g, "");
+
+      // 2. Hapus nomor halaman yang berdiri sendiri (misal: '20', '21' di antara paragraf)
+      // Ini mencari baris yang HANYA berisi angka dan spasi
+      cleanedSection = cleanedSection.replace(/^\s*\d+\s*$/gm, "");
+
+      // 3. (PALING PENTING) Ganti SEMUA whitespace (termasuk \n, \t) dengan SATU spasi.
+      // Ini akan mengubah "BAB II\n\nLANDASAN TEORI" menjadi "BAB II LANDASAN TEORI"
+      cleanedSection = cleanedSection.replace(/\s+/g, " ");
+
+      // ---------------------------------------------
+
+      relevantText += cleanedSection + " "; // Tambahkan teks bersih (diikuti 1 spasi)
       chaptersFound.push(sectionHeader.substring(0, 20));
+    } else {
+      console.log(`Melewati (Tidak di Whitelist): ${sectionHeader.substring(0, 50)}...`);
     }
   }
 
   if (relevantText === "") {
+    console.warn("Tidak ada bab yang cocok dengan keywords...");
     throw new Error("Tidak dapat menemukan bab yang relevan (Teori/Metodologi/Pembahasan) dalam PDF.");
   }
 
-  return relevantText;
+  console.log(`Ekstraksi selesai. Total karakter: ${relevantText.length}. Bab: ${chaptersFound.join(', ')}`);
+
+  // Mengembalikan teks yang sudah bersih total
+  return relevantText.trim();
 }
 
-// Fungsi untuk memanggil AI (Hugging Face)
 async function getQuestionsFromAI(text) {
   // 1. Sesuaikan dengan endpoint & token Anda
-  const API_URL = "https://router.huggingface.co/v1/chat/completions";
-  const token = process.env.HF_TOKEN; // Pastikan .env Anda berisi HF_TOKEN
-
-  if (!token) {
-    throw new Error("HF_TOKEN tidak ditemukan di .env file.");
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY tidak ditemukan di .env file.");
   }
 
-  // 2. Prompt Engineering untuk Chat Completions
-  // Kita 'paksa' AI untuk HANYA mengembalikan JSON.
-  const systemPrompt = `Kamu adalah AI penulis dialog untuk simulasi sidang skripsi yang berisi 3 dosen dan 1 mahasiswa. 
-Buat lima pertanyaan akademis berbasis skripsi atau topik penelitian dari file pdf yang di upload. 
-Setiap pertanyaan harus memiliki 4 opsi jawaban (A-D), dan tentukan jawaban yang benar.
+  const genAI = new GoogleGenerativeAI(apiKey);
 
-Setelah itu, buat percakapan berbentuk JSON seperti di bawah ini:
-- Jika mahasiswa menjawab benar, 3 dosen akan memberikan respons yang berbeda:
-  - Dosen1: nada tajam dan sarkas tapi tetap sopan.
-  - Dosen2: humoris, nyeletuk, kadang menyindir.
-  - Dosen3: kalem dan akademis.
-  - Mahasiswa: netral tidak sombong dan tidak pesimis supaya ekspresi apapun yg saya berikan untuk mahasiswa kesannya masih masuk
-- Jika mahasiswa menjawab salah, buat percakapan yang lebih “menyeleneh tapi tetap realistis”.
-- Setiap karakter (terutama dosen) bisa bicara lebih dari satu bubble (2–3 baris kalimat).
-- Gunakan sedikit narasi dalam tanda kurung seperti (mengetuk meja), (tersenyum tipis), (tertawa kecil), (menarik napas pelan), dst.
-- Gaya bahasanya harus terasa seperti sidang skripsi sungguhan tapi dengan nuansa sarkas dan sinis halus khas dosen.
-- Anda HARUS mengembalikan HANYA sebuah array JSON yang valid, tanpa teks penjelasan apa pun sebelum atau sesudah array tersebut.
-Format setiap objek dalam array JSON harus seperti ini:
-{
-  "question": "Pertanyaan...",
-  "options": [
-   {"key": "A", "text": "Opsi jawaban A"},
-    {"key": "B", "text": "Opsi jawaban B"},
-    {"key": "C", "text": "Opsi jawaban C"},
-    {"key": "D", "text": "Opsi jawaban D"}
-  ],
-  "correct_answer": "X",
-  "responses": {
-    "correct": {
-      "dosen1": ["...","..."],
-      "dosen2": ["...","..."],
-      "dosen3": ["...","..."],
-      "mahasiswa": ["...","..."]
-    },
-    "incorrect": {
-      "dosen1": ["...","..."],
-      "dosen2": ["...","..."],
-      "dosen3": ["...","..."],
-      "mahasiswa": ["...","..."]
+  // --- PERUBAHAN 1: Prompt Sistem Dibuat Fleksibel ---
+  // Menghapus 'Buat lima pertanyaan' agar tidak konflik dengan user prompt
+  const systemPrompt = `Kamu adalah AI penulis dialog untuk simulasi sidang skripsi. 
+Buat sejumlah pertanyaan akademis (sesuai permintaan user) berbasis teks PDF yang di-upload. 
+Setiap pertanyaan harus memiliki 3 opsi jawaban (A-C) dan jawaban yang benar.
+
+Setelah itu, buat respons JSON untuk skenario "correct" (benar) dan "incorrect" (salah).
+
+ATURAN KETAT UNTUK RESPONS DIALOG:
+1. Terdapat 3 Dosen (Dosen1: Tajam/sarkas, Dosen2: Humoris/nyeletuk, Dosen3: Kalem/logis) dan 1 Mahasiswa (Netral/sopan).
+2. Untuk setiap skenario ("correct" dan "incorrect"), pilih secara acak HANYA 1 atau MAKSIMAL 2 dosen untuk berbicara.
+3. Dosen yang TIDAK BERBICARA harus memiliki nilai array string kosong: [""]
+4. Mahasiswa HARUS selalu memberikan respons.
+5. Semua dialog harus SANGAT RINGKAS (1 baris kalimat pendek, maks 15 kata).
+6. Gunakan narasi singkat seperti (tersenyum miring), (tertawa kecil), (menunduk), dll.
+7. Anda HARUS mengembalikan HANYA sebuah array JSON yang valid tanpa teks penjelasan apa pun.
+
+FORMAT JSON WAJIB (Perhatikan contoh string kosong):
+[
+  {
+    "question": "Pertanyaan...",
+    "options": [
+     {"key": "A", "text": "Opsi A"},
+      {"key": "B", "text": "Opsi B"},
+      {"key": "C", "text": "Opsi C"},
+    ],
+    "correct_answer": "X",
+    "responses": {
+      "correct": {
+        "dosen1": ["(Tersenyum miring) Tumben sekali..."],
+        "dosen2": [""],
+        "dosen3": ["Jawaban Anda sudah tepat."],
+        "mahasiswa": ["Terima kasih, Pak."]
+      },
+      "incorrect": {
+        "dosen1": [""],
+        "dosen2": ["Aduh, itu ngambil dari Google ya?"],
+        "dosen3": [""],
+        "mahasiswa": ["(Menunduk) Maaf, Pak..."]
+      }
     }
   }
-}
+]
 
 Jaga agar semua kalimat tetap natural dan sesuai konteks akademik Indonesia.
 Dosen1 = tegas, agak nyebelin tapi jujur.
@@ -146,72 +196,75 @@ Gunakan frasa penanda suasana seperti:
 (berdehem kecil)
 `;
 
-  // Teks dari PDF akan dimasukkan di sini
+  // User prompt Anda sudah benar, meminta 2 pertanyaan
   const userPrompt = `
 Berikut adalah teksnya:
 """
-${text.substring(0, 4000)}
+${text.substring(0, 8000)}
 """
-Tolong buatkan 2 pertanyaan pilihan ganda dalam format JSON yang telah ditentukan.`;
+Tolong buatkan 7 pertanyaan pilihan ganda dalam format JSON yang telah ditentukan.`;
+  simpanKeFile(`${systemPrompt}\n${userPrompt}`, "output_node.txt");
+  // return;
 
-  // 3. Siapkan body request
+  // 3. Konfigurasi Model
+  const safetySettings = [
+    { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+    { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+    { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+    { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+  ];
 
-  const requestBody = {
-    model: "meta-llama/Meta-Llama-3-8B-Instruct", // Model dari request Anda
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt },
-    ],
-    stream: false,
-    max_tokens: 2048, // Beri ruang yang cukup untuk 10 pertanyaan
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    systemInstruction: systemPrompt,
+    safetySettings: safetySettings
+  });
+
+  // 4. Siapkan request
+  const generationConfig = {
+    responseMimeType: "application/json",
+    // --- PERUBAHAN 2: Naikkan Batas Token ---
+    maxOutputTokens: 8192, // Dinaikkan dari 2048
   };
 
-  // 4. Siapkan headers
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
+  const chatRequest = {
+    contents: [{ role: "user", parts: [{ text: userPrompt }] }],
+    generationConfig: generationConfig
   };
 
-  console.log("Mengirim request ke Hugging Face Chat API...");
+  console.log("Mengirim request ke Gemini API...");
 
   try {
-    // 5. Lakukan panggilan API menggunakan Axios
-    const response = await axios.post(API_URL, requestBody, { headers });
+    // 5. Lakukan panggilan API
+    const result = await model.generateContent(chatRequest);
+    const response = result.response;
 
-    // 6. Ambil dan parse jawaban (format baru)
-    // 6. Ambil dan parse jawaban (format baru)
-    const aiMessageContent = response.data.choices[0].message.content;
+    // --- PERUBAHAN 3: Log Diagnostik ---
+    const finishReason = response.candidates[0].finishReason;
+    console.log("===================================");
+    console.log("ALASAN SELESAI (Finish Reason):", finishReason);
+    console.log("===================================");
+    // ------------------------------------
+
+    // 6. Ambil dan parse jawaban
+    const aiMessageContent = response.text();
     console.log(aiMessageContent);
 
+    // Cek jika outputnya kosong, yang bisa terjadi jika diblokir
+    if (!aiMessageContent) {
+      if (response.promptFeedback) {
+        console.error("Prompt diblokir, alasan:", response.promptFeedback.blockReason);
+        throw new Error(`Prompt diblokir: ${response.promptFeedback.blockReason}`);
+      }
+      throw new Error("AI mengembalikan respons kosong.");
+    }
+
+    // Logika parsing Anda dipertahankan, karena sudah bagus
     try {
       const questions = JSON.parse(aiMessageContent);
       console.log("AI response parsed successfully.");
-      // 🔧 Validasi & tambahkan default responses jika belum ada
-      questions.forEach((q, i) => {
-        if (!q.responses) {
-          q.responses = {
-            correct: {
-              dosen1: "Komentar benar (default) dari Dosen Killer.",
-              dosen2: "Komentar benar (default) dari Dosen Stres.",
-              dosen3: "Komentar benar (default) dari Dosen Normal.",
-            },
-            incorrect: {
-              dosen1: "Komentar salah (default) dari Dosen Killer.",
-              dosen2: "Komentar salah (default) dari Dosen Stres.",
-              dosen3: "Komentar salah (default) dari Dosen Normal.",
-            },
-          };
-        }
-      });
 
-      // Simpan hasil ke file JSON
-      fs.writeFileSync(
-        "./pertanyaan.json",
-        JSON.stringify(questions, null, 2),
-        "utf8"
-      );
-      console.log("Pertanyaan berhasil disimpan di pertanyaan.json");
-
+      // ... (Validasi & penulisan file Anda) ...
       fs.writeFileSync(
         "./pertanyaan.json",
         JSON.stringify(questions, null, 2),
@@ -220,12 +273,13 @@ Tolong buatkan 2 pertanyaan pilihan ganda dalam format JSON yang telah ditentuka
       console.log("Pertanyaan berhasil disimpan di pertanyaan.json");
 
       return questions;
+
     } catch (jsonError) {
       console.warn(
-        "AI response was not pure JSON. Mencoba mengekstrak JSON..."
+        "AI response was not pure JSON. Mencoba mengekstrak..."
       );
+      // ... (Logika fallback Anda) ...
       const jsonMatch = aiMessageContent.match(/\[\s*\{[\s\S]*\}\s*\]/);
-
       if (jsonMatch) {
         const questions = JSON.parse(jsonMatch[0]);
         fs.writeFileSync(
@@ -233,7 +287,7 @@ Tolong buatkan 2 pertanyaan pilihan ganda dalam format JSON yang telah ditentuka
           JSON.stringify(questions, null, 2),
           "utf8"
         );
-        console.log("Pertanyaan berhasil disimpan di pertanyaan.json");
+        console.log("Pertanyaan (diekstrak) berhasil disimpan di pertanyaan.json");
         return questions;
       } else {
         console.error(
@@ -244,12 +298,7 @@ Tolong buatkan 2 pertanyaan pilihan ganda dalam format JSON yang telah ditentuka
       }
     }
   } catch (error) {
-    // Tangani error API
-    if (error.response) {
-      console.error("Error dari Hugging Face API:", error.response.data);
-    } else {
-      console.error("Error saat memanggil API:", error.message);
-    }
+    console.error("Error dari Gemini API:", error);
     throw new Error("Gagal menghasilkan pertanyaan dari AI.");
   }
 }
