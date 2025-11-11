@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Apa yang dimaksud dengan sistem informasi pengelolaan bisnis penggadaian pada PT. Usaha Gadai Mandiri?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sistem informasi yang digunakan untuk mengelola data nasabah dan transaksi"
+      },
+      {
+        "key": "B",
+        "text": "Sistem informasi yang digunakan untuk mengelola data penggadaian dan aset"
+      },
+      {
+        "key": "C",
+        "text": "Sistem informasi yang digunakan untuk mengelola data pelanggan dan produk"
+      },
+      {
+        "key": "D",
+        "text": "Sistem informasi yang digunakan untuk mengelola data keuangan dan akuntansi"
+      }
+    ],
+    "correct_answer": "A",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          "Sistem informasi yang dimaksud adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi pada PT. Usaha Gadai Mandiri.",
+          "Baik, Anda mengerti konsep tersebut."
+        ],
+        "dosen2": [
+          "Hmm, sistem informasi pengelolaan bisnis penggadaian, ya, itu untuk mengelola data nasabah dan transaksi.",
+          "Sangat bagus, Anda memiliki pemahaman yang baik."
+        ],
+        "dosen3": [
+          "Dengan adanya sistem informasi, pengelolaan data nasabah dan transaksi dapat menjadi lebih efektif.",
+          "Baik, Anda telah memahami konsep tersebut."
+        ],
+        "mahasiswa": [
+          "Saya berharap jawaban saya benar, saya telah mencoba menjawab dengan baik.",
+          "Terima kasih, saya akan terus berusaha."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          "Maaf, jawaban Anda salah, sistem informasi pengelolaan bisnis penggadaian sebenarnya adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi.",
+          "Anda perlu memperbaiki pengetahuan Anda tentang sistem informasi."
+        ],
+        "dosen2": [
+          "Oh, saya tidak pikir jawaban Anda salah, tapi saya rasa Anda harus memperbaiki pengetahuan Anda tentang sistem informasi.",
+          "Tidak apa-apa, kita semua membuat kesalahan, tapi Anda harus belajar dari kesalahan tersebut."
+        ],
+        "dosen3": [
+          "Sayangnya, jawaban Anda salah, sistem informasi pengelolaan bisnis penggadaian sebenarnya adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi.",
+          "Anda perlu memperbaiki pengetahuan Anda tentang sistem informasi untuk dapat lebih baik."
+        ],
+        "mahasiswa": [
+          "Saya tidak tahu apa yang salah, saya telah mencoba menjawab dengan baik.",
+          "Terima kasih, saya akan terus berusaha."
+        ]
+      }
+    }
+  },
+  {
+    "question": "Apa yang dimaksud dengan WhatsApp Gateway dalam konteks sistem informasi pengelolaan bisnis penggadaian?",
+    "options": [
+      {
+        "key": "A",
+        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan"
+      },
+      {
+        "key": "B",
+        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengelola data nasabah dan transaksi"
+      },
+      {
+        "key": "C",
+        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengelola data keuangan dan akuntansi"
+      },
+      {
+        "key": "D",
+        "text": "WhatsApp Gateway adalah sistem yang digunakan untuk mengelola data produk dan layanan"
+      }
+    ],
+    "correct_answer": "A",
+    "responses": {
+      "correct": {
+        "dosen1": [
+          "WhatsApp Gateway adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan, baik melalui pesan teks atau pesan suara.",
+          "Baik, Anda telah memahami konsep tersebut."
+        ],
+        "dosen2": [
+          "Hmm, WhatsApp Gateway, ya, itu untuk mengirimkan notifikasi kepada pelanggan.",
+          "Sangat bagus, Anda memiliki pemahaman yang baik."
+        ],
+        "dosen3": [
+          "Dengan adanya WhatsApp Gateway, pengelolaan notifikasi kepada pelanggan dapat menjadi lebih efektif.",
+          "Baik, Anda telah memahami konsep tersebut."
+        ],
+        "mahasiswa": [
+          "Saya berharap jawaban saya benar, saya telah mencoba menjawab dengan baik.",
+          "Terima kasih, saya akan terus berusaha."
+        ]
+      },
+      "incorrect": {
+        "dosen1": [
+          "Maaf, jawaban Anda salah, WhatsApp Gateway sebenarnya adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan.",
+          "Anda perlu memperbaiki pengetahuan Anda tentang WhatsApp Gateway."
+        ],
+        "dosen2": [
+          "Oh, saya tidak pikir jawaban Anda salah, tapi saya rasa Anda harus memperbaiki pengetahuan Anda tentang WhatsApp Gateway.",
+          "Tidak apa-apa, kita semua membuat kesalahan, tapi Anda harus belajar dari kesalahan tersebut."
+        ],
+        "dosen3": [
+          "Sayangnya, jawaban Anda salah, WhatsApp Gateway sebenarnya adalah sistem yang digunakan untuk mengirimkan notifikasi kepada pelanggan.",
+          "Anda perlu memperbaiki pengetahuan Anda tentang WhatsApp Gateway untuk dapat lebih baik."
+        ],
+        "mahasiswa": [
+          "Saya tidak tahu apa yang salah, saya telah mencoba menjawab dengan baik.",
+          "Terima kasih, saya akan terus berusaha."
+        ]
+      }
+    }
+  }
+]
