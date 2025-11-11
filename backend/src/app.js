@@ -11,6 +11,74 @@ const port = 3000;
 // Konfigurasi Multer untuk menyimpan file sementara
 const upload = multer({ dest: "uploads/" });
 
+function extractRelevantText(fullText) {
+  const keywords = [
+    "LANDASAN TEORI",
+    "TINJAUAN PUSTAKA",
+    "KAJIAN PUSTAKA",
+    "DASAR TEORI",
+    "HASIL DAN PEMBAHASAN",
+    "PEMBAHASAN",
+    "HASIL IMPLEMENTASI",
+    "IMPLEMENTASI",
+    "HASIL PENELITIAN DAN PEMBAHASAN",
+  ];
+
+  let processedText = fullText;
+
+  const bab1Regex = /\bBAB\s+I\b/ig;
+
+  const bab1Matches = [...processedText.matchAll(bab1Regex)];
+
+  if (bab1Matches.length > 0) {
+    const lastBab1Match = bab1Matches[bab1Matches.length - 1];
+    processedText = processedText.substring(lastBab1Match.index);
+  }
+
+  const endKeywords = ["DAFTAR PUSTAKA", "LAMPIRAN"];
+  let earliestCutOff = -1;
+
+  for (const keyword of endKeywords) {
+    const regex = new RegExp(keyword, "i");
+    const match = processedText.match(regex);
+    if (match) {
+      if (earliestCutOff === -1 || match.index < earliestCutOff) {
+        earliestCutOff = match.index;
+      }
+    }
+  }
+
+  if (earliestCutOff !== -1) {
+    processedText = processedText.substring(0, earliestCutOff);
+  }
+
+  const chapterRegex = /(?=BAB\s+(?:[IVXLCDM]+|\d+))/i;
+  const allSections = processedText.split(chapterRegex);
+
+  let relevantText = "";
+  let chaptersFound = [];
+
+  for (let i = 0; i < allSections.length; i++) {
+    const section = allSections[i];
+
+    if (section.trim() === "") continue;
+
+    const sectionHeaderRaw = section.substring(0, 300).toUpperCase();
+    const sectionHeader = sectionHeaderRaw.replace(/\s+/g, " ");
+
+    if (keywords.some(keyword => sectionHeader.includes(keyword))) {
+      relevantText += section + "\n\n";
+      chaptersFound.push(sectionHeader.substring(0, 20));
+    }
+  }
+
+  if (relevantText === "") {
+    throw new Error("Tidak dapat menemukan bab yang relevan (Teori/Metodologi/Pembahasan) dalam PDF.");
+  }
+
+  return relevantText;
+}
+
 // Fungsi untuk memanggil AI (Hugging Face)
 async function getQuestionsFromAI(text) {
   // 1. Sesuaikan dengan endpoint & token Anda
@@ -198,11 +266,13 @@ app.post("/generate-quiz", upload.single("file"), async (req, res) => {
     const pdfData = new PDFParse({ data: dataBuffer });
     const pdfText = await pdfData.getText();
 
+    const relevantText = extractRelevantText(pdfText.text);
+
     // // 2. Kirim teks ke AI untuk dibuatkan pertanyaan
     console.log("Mengirim teks ke AI...");
-    const questions = await getQuestionsFromAI(pdfText.text);
+    const questions = await getQuestionsFromAI(relevantText);
 
-    // // 3. Kirim pertanyaan kembali ke Ren'Py
+    // // // 3. Kirim pertanyaan kembali ke Ren'Py
     console.log("Pertanyaan berhasil dibuat, mengirim ke Ren'Py.");
     res.json(questions);
   } catch (error) {
