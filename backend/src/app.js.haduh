@@ -1,0 +1,152 @@
+import express from "express";
+import bodyParser from "body-parser";
+import fetch from "node-fetch";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config(); // Biar bisa baca .env file
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// === Ambil token dari .env ===
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+  console.error("❌ GEMINI_API_KEY belum diset di .env!");
+  process.exit(1);
+}
+
+// === Prompt kamu tetap sama ===
+const systemPrompt = `
+Kamu adalah AI yang berperan sebagai empat karakter dalam simulasi sidang skripsi interaktif:
+1. **Dosen 1 (Killer)** — sangat kritis, tajam, sinis elegan, sering memotong pembicaraan, dan menekan mahasiswa dengan pertanyaan relevan tapi menohok.
+2. **Dosen 2 (Stres/Nyeleneh)** — cepat bicara, suka ngomong ngelantur tapi kadang ada benarnya, sering bercanda absurd yang membuat suasana tegang jadi aneh tapi lucu.
+3. **Dosen 3 (Normal)** — tenang, profesional, dan menjadi penengah antara dua dosen lain. Fokus pada substansi ilmiah dan metodologi penelitian.
+4. **Mahasiswa (MC)** — menjawab dengan sopan dan netral (tidak terlalu gugup atau sombong). Responsnya logis dan akademis.
+
+🎭 **Gaya Percakapan:**
+- Gunakan bahasa Indonesia santai tapi akademis, seperti percakapan nyata di ruang sidang kampus.
+- Tambahkan sedikit humor satir dan logika absurd dari Dosen Stres agar suasana tidak kaku.
+- Tulis percakapan minimal 15 baris, dengan format:
+
+**Dosen [Nama]:** [Dialog singkat, ekspresif, dan realistis]  
+**Mahasiswa:** [Jawaban netral dan sopan]
+
+💬 Gunakan ekspresi manusiawi seperti:
+"hmm...", "hah?", "astaga mahasiswa zaman sekarang", "serius nih?", "oh begitu rupanya".
+
+Tambahkan deskripsi singkat dalam tanda kurung bila perlu, misal:  
+(tersenyum sinis), (mengetuk meja), (berdeham pelan).
+
+---
+
+📘 **Konteks Konten (berdasarkan file PDF skripsi):**
+
+Gunakan isi file PDF yang dikirim pengguna untuk:
+1. Menganalisis konteks dan topik penelitian.
+2. Membuat 10 pertanyaan pilihan ganda tentang kekurangan atau potensi kesalahan dari isi laporan tersebut.
+
+Kamu HARUS mengembalikan **HANYA array JSON yang valid**, tanpa penjelasan lain, dengan format:
+[
+  {
+    "question": "Teks pertanyaan di sini?",
+    "options": [
+      {"key": "A", "text": "Teks Opsi A"},
+      {"key": "B", "text": "Teks Opsi B"},
+      {"key": "C", "text": "Teks Opsi C"},
+      {"key": "D", "text": "Teks Opsi D"}
+    ],
+    "correct_answer": "B",
+    "responses": {
+      "correct": {
+        "dosen1": "Komentar pendek dan satir elegan dari Dosen Killer.",
+        "dosen2": "Komentar cepat dan absurd dari Dosen Stres.",
+        "dosen3": "Komentar tenang dan profesional dari Dosen Normal."
+      },
+      "incorrect": {
+        "dosen1": "Komentar tajam dan sinis dari Dosen Killer.",
+        "dosen2": "Komentar asal tapi lucu dari Dosen Stres.",
+        "dosen3": "Komentar membimbing dari Dosen Normal."
+      }
+    }
+  }
+]
+`;
+
+// === Fungsi pemanggilan Gemini API ===
+async function getQuestionsFromGemini(userPrompt) {
+  console.log("🚀 Mengirim request ke Gemini API...");
+
+  const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent";
+
+  try {
+    const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `${systemPrompt}\n\n${userPrompt}`,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    // Kalau Gemini balas HTML → berarti error (biasanya invalid key / format request)
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("text/html")) {
+      const html = await response.text();
+      console.error("❌ Gemini balas HTML (kemungkinan API key salah / format request salah)");
+      console.log(html.substring(0, 200));
+      throw new Error("Respons dari Gemini bukan JSON (kemungkinan API key invalid atau endpoint salah).");
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("❌ Error dari Gemini API:", data);
+      throw new Error(data.error?.message || "Gagal memanggil Gemini API");
+    }
+
+    const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    console.log("✅ Respons mentah dari Gemini (potongan):", aiText.substring(0, 300));
+
+    // Pastikan hasilnya JSON valid
+    const jsonStart = aiText.indexOf("[");
+    const jsonEnd = aiText.lastIndexOf("]") + 1;
+    const jsonText = aiText.slice(jsonStart, jsonEnd);
+
+    return JSON.parse(jsonText);
+  } catch (err) {
+    console.error("💥 Error saat memanggil Gemini:", err.message);
+    throw err;
+  }
+}
+
+// === Endpoint API ===
+app.post("/api/generate", async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text || text.trim() === "") {
+      return res.status(400).json({ success: false, message: "Teks tidak boleh kosong" });
+    }
+
+    const questions = await getQuestionsFromGemini(text);
+    res.json({ success: true, data: questions });
+  } catch (error) {
+    console.error("Error di server:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// === Jalankan server ===
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Server jalan di http://localhost:${PORT}`));
