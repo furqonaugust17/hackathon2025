@@ -1,15 +1,12 @@
-﻿# ============================================================
-# 1. Variabel dasar
-# ============================================================
-default health = 100
-default max_health = 100
-default quiz_questions = []  # Akan diisi dari API
-define e = Character("Sylvie", color="#c8ffc8")
-define backend_url = "http://localhost:3000/generate-quiz"  # URL Node.js Anda
+﻿default health = 100
+define max_health = 100
+define healthOperation = 10
+default quiz_questions = []
+default current_dialogue = None
 
-# ============================================================
-# 2. Health Bar
-# ============================================================
+define quiz_url = "http://localhost:3000/generate-quiz"
+define dialogue_url = "http://localhost:3000/generate-dialogue"
+
 screen health_bar:
     bar:
         value health
@@ -19,109 +16,135 @@ screen health_bar:
         ysize 20
         xsize 300
 
-# ============================================================
-# 3. Label Start
-# ============================================================
+define mahasiswa = Character("Mahasiswa", color="#c8ffc8")
+define dosen1 = Character("Dosen 1 (Sarkas)", color="#FFC0CB")
+define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6")
+define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90")
+define n = Character("narrator")
+
 label start:
     scene black
     with fade
     show screen health_bar
 
-    e "Selamat datang di Kuis TA!"
-
+    n "Selamat datang di Kuis TA!"
+    
     python:
         import requests
-
+        
+        file_path = renpy.input("Masukkan path PDF Anda:").strip()
         quiz_ready = False
-
-        file_path = renpy.input("Masukkan path PDF:").strip()
-        renpy.say(None, f"Kamu memilih file: {file_path}")
-
-        if file_path:
-            if not file_path.lower().endswith(".pdf"):
-                renpy.say(None, "Path file tidak valid atau bukan PDF.")
-            else:
-                renpy.say(None, f"Menggunakan file: {file_path}")
-                renpy.say(None, "Mengunggah file dan membuat pertanyaan... Ini mungkin perlu waktu.")
-
-                try:
-                    file_name = file_path.split('/')[-1].split('\\')[-1]
-                    with open(file_path, 'rb') as f:
-                        files = {'file': (file_name, f, 'application/pdf')}
-                        response = requests.post(backend_url, files=files, timeout=120)
-
-                    if response.status_code == 200:
-                        try:
-                            store.quiz_questions = response.json()
-                            quiz_ready = True
-                        except Exception as json_error:
-                            renpy.say(None, "ERROR: Gagal mem-parsing JSON dari AI.")
-                            renpy.say(None, f"Pesan Error: {str(json_error)}")
-                            renpy.say(None, f"Respon Mentah: {response.text}")
-                    else:
-                        renpy.say(None, f"Gagal membuat kuis. Status: {response.status_code}")
-                        renpy.say(None, f"Respon server: {response.text}")
-
-                except FileNotFoundError:
-                    renpy.say(None, "Error: File tidak ditemukan di path yang Anda tentukan.")
-                except Exception as e:
-                    renpy.say(None, f"Terjadi error koneksi/sistem: {str(e)}")
-        else:
-            renpy.say(None, "Anda tidak menentukan file_path di skrip.")
-
-        if quiz_ready:
-            renpy.say(None, "Pertanyaan berhasil dibuat! Mari kita mulai kuisnya.")
-            renpy.jump("quiz_start")
-        else:
-            renpy.say(None, "Terjadi masalah, kembali ke awal.")
+        
+        if not file_path:
+            renpy.say(None, "Anda tidak memilih file. Kembali ke awal.")
+            renpy.jump("start")
+        
+        if not file_path.lower().endswith(".pdf"):
+            renpy.say(None, "File harus berekstensi .pdf.")
             renpy.jump("start")
 
-# ============================================================
-# 4. Label Quiz
-# ============================================================
-label quiz_start:
+        renpy.say(None, f"Menggunakan file: {file_path}")
+        renpy.say(None,"(Menganalisis PDF dan membuat daftar pertanyaan... Ini mungkin perlu waktu.)")
+        
+        try:
+            file_name = file_path.split('/')[-1].split('\\')[-1]
+            
+            with open(file_path, 'rb') as f:
+                files = {'file': (file_name, f, 'application/pdf')}
+                response = requests.post(quiz_url, files=files, timeout=120)
+
+            if response.status_code == 200:
+                
+                try:
+                    store.quiz_questions = response.json()
+                    quiz_ready = True
+                except Exception as json_error:
+                    renpy.say(None, f"ERROR: Gagal mem-parsing JSON dari AI.")
+                    renpy.say(None, f"Pesan Error: {str(json_error)}")
+                    renpy.say(None, f"Respon Mentah: {response.text}")
+            
+            else:
+                renpy.say(None, f"Gagal membuat kuis. Status: {response.status_code}")
+                renpy.say(None, f"Respon server: {response.text}")
+
+        except Exception as e:
+            renpy.say(None, f"Terjadi error koneksi/sistem: {str(e)}")
+
+        if quiz_ready:
+            renpy.say(None,"Pertanyaan berhasil dibuat! Mari kita mulai kuisnya.")
+            renpy.jump("quiz_loop")
+        else:
+            renpy.say(None, "Gagal memuat kuis. Kembali ke awal.")
+            renpy.jump("start")
+
+label quiz_loop:
     $ correct_answers = 0
+    $ healthOperation = health / len(store.quiz_questions)
 
     python:
         for i, q in enumerate(store.quiz_questions):
-            question_text = q["question"]
-            options = q["options"]
-            correct_answer = q["correct_answer"]
-            responses = q["responses"]
+            
+            renpy.say(None, f"Pertanyaan {i+1} dari {len(store.quiz_questions)}:")
+            renpy.say(None, f"{q['question']}")
 
-            renpy.say(None, f"Pertanyaan {i+1}: {question_text}")
-
-            menu_options = [(opt["text"], opt["key"]) for opt in options]
+            menu_options = [(opt['text'], opt['key']) for opt in q['options']]
+            
             choice = renpy.display_menu(menu_options)
+            
+            is_correct = (choice == q['correct_answer'])
+            
+            renpy.say(n,"(Para dosen sedang mengevaluasi jawaban Anda...)")
+            
+            try:
+                payload = {
+                    "questionText": q['question'],
+                    "playerAnswer": choice,
+                    "isCorrect": is_correct
+                }
+                
+                response = requests.post(dialogue_url, json=payload, timeout=60)
+                
+                if response.status_code == 200:
+                    store.current_dialogue = response.json()
+                else:
+                    renpy.say(None, f"Gagal mengambil dialog: {response.text}")
+                    store.current_dialogue = None
 
-            if choice == correct_answer:
-                renpy.say(None, "Jawaban benar!")
-                store.health = min(store.max_health, store.health + 10)
-                store.correct_answers += 1
+            except Exception as e:
+                renpy.say(None, f"Error mengambil dialog: {str(e)}")
+                store.current_dialogue = None
 
-                # Reaksi Dosen (Jawaban Benar)
-                renpy.say("Dosen 1", responses["correct"]["dosen1"])
-                renpy.say("Dosen 2", responses["correct"]["dosen2"])
-                renpy.say("Dosen 3", responses["correct"]["dosen3"])
+            if store.current_dialogue:
+                if store.current_dialogue['dosen1'][0]:
+                    renpy.say(dosen1,store.current_dialogue['dosen1'][0])
+                
+                if store.current_dialogue['dosen2'][0]:
+                    renpy.say(dosen2,store.current_dialogue['dosen2'][0])
+                
+                if store.current_dialogue['dosen3'][0]:
+                    renpy.say(dosen3,store.current_dialogue['dosen3'][0])
+                 
+                renpy.say(mahasiswa, store.current_dialogue['mahasiswa'][0])
+
+            if is_correct:
+                renpy.say(n, "Jawaban Anda Benar!")
+                health = min(max_health, health + healthOperation)
+                correct_answers += 1
             else:
-                renpy.say(None, f"Jawaban salah. Jawaban yang benar adalah {correct_answer}.")
-                store.health -= 10
-
-                # Reaksi Dosen (Jawaban Salah)
-                renpy.say("Dosen 1", responses["incorrect"]["dosen1"])
-                renpy.say("Dosen 2", responses["incorrect"]["dosen2"])
-                renpy.say("Dosen 3", responses["incorrect"]["dosen3"])
-
-            if store.health <= 0:
-                renpy.say(None, "Health kamu habis! Game Over.")
+                renpy.say(n, f"Jawaban Anda Salah. (Jawaban: {q['correct_answer']})")
+                health -= healthOperation
+            
+            if health <= 0:
+                renpy.say(n, "Health Anda habis! Game Over.")
                 renpy.jump("game_over")
+    
+    jump quiz_complete
 
-    e "Kuis selesai! Kamu menjawab [correct_answers] dari [len(quiz_questions)] dengan benar."
+label quiz_complete:
+    n "Kuis telah selesai."
+    mahasiswa "Anda menjawab [correct_answers] dari [len(quiz_questions)] dengan benar."
     jump game_over
 
-# ============================================================
-# 5. Label Game Over
-# ============================================================
 label game_over:
-    e "Terima kasih telah bermain."
+    n "Terima kasih telah bermain."
     return
