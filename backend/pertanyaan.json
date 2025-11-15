@@ -1,28 +1,28 @@
 [
   {
-    "question": "Menurut penelitian Ramadhan (2022), apa tujuan utama dari pengembangan sistem informasi pengelolaan gadai berbasis web?",
+    "question": "Permasalahan utama apa yang berusaha diselesaikan oleh penelitian Ramadhan (2022) melalui pembangunan sistem informasi pengelolaan gadai berbasis web?",
     "options": [
       {
         "key": "A",
-        "text": "Mengurangi beban kerja petugas administrasi dalam mengirimkan pengingat manual."
+        "text": "Kurangnya laporan aktivitas bisnis yang efisien."
       },
       {
         "key": "B",
-        "text": "Menyediakan fitur laporan yang hanya dapat diakses oleh nasabah untuk memantau aktivitas transaksi mereka."
+        "text": "Pencatatan transaksi manual yang sering menimbulkan kesalahan dan keterlambatan."
       },
       {
         "key": "C",
-        "text": "Menyelesaikan permasalahan pencatatan transaksi manual yang sering menimbulkan kesalahan dan keterlambatan pengolahan data."
+        "text": "Kesulitan dalam mengintegrasikan sistem dengan notifikasi otomatis."
       }
     ],
-    "correct_answer": "C"
+    "correct_answer": "B"
   },
   {
-    "question": "Dalam penelitian oleh Putra dan Hidayat (2023), mengapa framework CodeIgniter dipilih untuk mengembangkan sistem informasi gadai?",
+    "question": "Menurut Putra dan Hidayat (2023), mengapa framework CodeIgniter dipilih untuk mengembangkan sistem informasi gadai?",
     "options": [
       {
         "key": "A",
-        "text": "Karena memiliki performa yang berat, dokumentasi yang minim, dan mempersulit proses pemeliharaan sistem."
+        "text": "Karena CodeIgniter adalah satu-satunya framework yang mendukung basis data PostgreSQL."
       },
       {
         "key": "B",
@@ -30,61 +30,61 @@
       },
       {
         "key": "C",
-        "text": "Karena merupakan framework eksklusif untuk basis data PostgreSQL dan tidak mendukung MVC."
+        "text": "Karena hanya cocok untuk pengembangan sistem berskala kecil."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Apa fungsi utama dari integrasi WhatsApp Gateway pada sistem informasi notifikasi otomatis yang dikembangkan oleh Lestari (2024)?",
+    "question": "Apa tujuan utama dari integrasi WhatsApp Gateway pada sistem informasi yang dikembangkan oleh Lestari (2024)?",
     "options": [
       {
         "key": "A",
-        "text": "Mengurangi beban kerja sistem dalam memproses data transaksi secara manual."
+        "text": "Untuk meningkatkan kecepatan pemrosesan data transaksi gadai."
       },
       {
         "key": "B",
-        "text": "Mengirimkan notifikasi otomatis kepada pengguna sebagai sarana komunikasi real-time."
+        "text": "Untuk mengirimkan notifikasi otomatis kepada pengguna sebagai sarana komunikasi real-time."
       },
       {
         "key": "C",
-        "text": "Menyimpan data nasabah dan barang gadai dalam bentuk pesan WhatsApp."
+        "text": "Untuk memudahkan petugas administrasi dalam mencatat data nasabah."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Menurut Simarmata (2021), apa keunggulan utama aplikasi berbasis web yang relevan untuk proyek ini?",
+    "question": "Berdasarkan definisi Jogiyanto (2019), unsur-unsur apa saja yang membentuk suatu sistem informasi?",
     "options": [
       {
         "key": "A",
-        "text": "Memerlukan instalasi tambahan di perangkat pengguna untuk keamanan yang lebih baik."
+        "text": "Hanya perangkat lunak, data, dan prosedur."
       },
       {
         "key": "B",
-        "text": "Aksesibilitas karena dapat dijalankan melalui berbagai perangkat selama terhubung ke jaringan internet."
+        "text": "Perangkat keras, perangkat lunak, data, prosedur, serta sumber daya manusia."
       },
       {
         "key": "C",
-        "text": "Hanya dapat diakses melalui satu jenis browser tertentu untuk menjaga konsistensi data."
+        "text": "Perangkat keras, data, dan sumber daya manusia saja."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Mengapa PostgreSQL dipilih sebagai sistem manajemen basis data untuk sistem pengelolaan bisnis penggadaian ini?",
+    "question": "Mengapa PostgreSQL dipilih sebagai sistem manajemen basis data dalam sistem pengelolaan bisnis penggadaian ini?",
     "options": [
       {
         "key": "A",
-        "text": "Karena hanya mendukung tipe data sederhana dan tidak memiliki fitur keamanan tingkat lanjut."
+        "text": "Karena hanya mendukung tipe data sederhana dan mudah dipelajari."
       },
       {
         "key": "B",
-        "text": "Karena unggul dalam stabilitas dan performa, mendukung relasi antar tabel dengan baik, serta memiliki kompatibilitas tinggi dengan CodeIgniter 4."
+        "text": "Karena unggul dalam stabilitas dan performa, serta memiliki kompatibilitas tinggi dengan framework CodeIgniter 4."
       },
       {
         "key": "C",
-        "text": "Karena mempercepat proses pengembangan aplikasi berskala kecil hingga menengah tanpa memerlukan framework."
+        "text": "Karena tidak memerlukan integritas transaksi."
       }
     ],
     "correct_answer": "B"
