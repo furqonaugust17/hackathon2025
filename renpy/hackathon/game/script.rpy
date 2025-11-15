@@ -8,7 +8,7 @@ define dialogue_url = "http://localhost:3000/generate-dialogue"
 
 
 define flash = Fade(.1, .1, .1, color="#ffffff")
-define mahasiswa = Character("Mahasiswa", color="#c8ffc8",callback=type_sound)
+define louisa = Character("louisa", color="#c8ffc8",callback=type_sound)
 define dosen1 = Character("Dosen 1 (Sarkas)", color="#FFC0CB", callback=type_sound)
 define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6", callback=type_sound)
 define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90", callback=type_sound)
@@ -16,20 +16,31 @@ define dospem = Character("Dospem", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
 
 label start:
+
+    
+
     scene kampus
     with fade
     show screen respect_bar
     show screen confidence_bar
+    
 
-    show dosen at posisi_mc,left,idle_dosen1
-    show dosen2 at posisi_dosen,right,idle_dosen2
-    mahasiswa "Perkenalkan, gue Siti. Mahasiswi Semester sepuluh… iya, masih di sini."
-    mahasiswa "Gue sama yang namanya ‘revisi’… udah lama banget bareng. Terlalu lama malah."
-    mahasiswa "Gua udah muak… gue udah capek. Pokoknya semester ini gw harus{w=1.2}—"
-    mahasiswa "LULUS."
 
-    mahasiswa "Maju lo sini trio sableg!"
-    mahasiswa "Gw bantai lo pada!"
+
+    # if confidence_bar > 50:
+    #     show dosen at posisi_mc,left,idle_dosen1
+    # else:
+    #     # show dosen2 at posisi_dosen,right,idle_dosen2
+    #     show dosen2 at posisi_mc,left,idle_dosen1
+    
+    louisa "Kenapa ya kaki gw berat banget? Serius, jalan dari tangga ke ruang siding doang, rasanya kayak habis lomba panjat tebing."
+    louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?,{w=1.0} MUATAMU CUMA SIDANG.{w=1.0} penentu hidup gw ini."
+    louisa "kenalin—gw Louisa, mahasiswa semester---, gausa dibahas deh, ga mood.
+harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war gw duluan."
+    louisa "Hidup gw aman, damai sampe dosen bilang, ‘ini rivisinyi gimping kik’. Halahhh bullshit banget kayak mantan, dan yapss habis itu? Hidup gw langsung dibawa roller coaster tanpa safety belt."
+
+    louisa "Maju lo sini trio sableg!"
+    louisa "Gw bantai lo pada!"
 
     # show dosen with flash
     # pause 0.1
@@ -38,7 +49,7 @@ label start:
     # with vpunch
     # hide dosen
     
-    mahasiswa "Nih alasan gw kenapa revisi mulu."
+    louisa "Nih alasan gw kenapa revisi mulu."
     
 
     
@@ -130,15 +141,23 @@ label quiz_loop:
 
             if store.current_dialogue:
                 if store.current_dialogue['dosen1'][0]:
+                    renpy.show("dosen", at_list=[left])
                     renpy.say(dosen1,store.current_dialogue['dosen1'][0])
+                    renpy.hide("dosen")
                 
                 if store.current_dialogue['dosen2'][0]:
+                    #renpy.show("dosen2", at_list=[center])
                     renpy.say(dosen2,store.current_dialogue['dosen2'][0])
+                    #renpy.hide("dosen2")
                 
                 if store.current_dialogue['dosen3'][0]:
+                    #renpy.show("dosen2", at_list=[center])
                     renpy.say(dosen3,store.current_dialogue['dosen3'][0])
+                    #renpy.hide("dosen2")
+                    
                  
-                renpy.say(mahasiswa, store.current_dialogue['mahasiswa'][0])
+                renpy.say(louisa, store.current_dialogue['louisa'][0])
+                
 
             if is_correct:
                 renpy.say(n, "Jawaban Anda Benar!")
@@ -156,7 +175,7 @@ label quiz_loop:
 
 label quiz_complete:
     n "Kuis telah selesai."
-    mahasiswa "Anda menjawab [correct_answers] dari [len(quiz_questions)] dengan benar."
+    louisa "Anda menjawab [correct_answers] dari [len(quiz_questions)] dengan benar."
     jump game_over
 
 label game_over:
