@@ -14,6 +14,7 @@ define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6", callback=type_so
 define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90", callback=type_sound)
 define dospem = Character("Dospem", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
+define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen2')]
 
 image eileen movie = Movie(play="animation/vide.webm", size=(config.screen_width, config.screen_height))
 
@@ -31,7 +32,7 @@ label start:
     # if confidence_bar > 50:
     #     show dosen at posisi_mc,left,idle_dosen1
     # else:
-    #     # show dosen2 at posisi_dosen,right,idle_dosen2
+    #     # show dosen2 at [posisi_dosen],right,idle_dosen2
     #     show dosen2 at posisi_mc,left,idle_dosen1
 
 
@@ -121,26 +122,37 @@ label quiz_loop:
     $ respectOperation = respect / len(store.quiz_questions)
 
     python:
+        import random
         for i, q in enumerate(store.quiz_questions):
             
-            renpy.say(None, f"Pertanyaan {i+1} dari {len(store.quiz_questions)}:")
-            renpy.say(None, f"{q['question']}")
-
+            rand_dosen = random.choice(listDosen)
+            renpy.show(rand_dosen[1], at_list=[right,posisi_dosen], layer="screens")
+            renpy.say(rand_dosen[0], f"{q['question']}")
+            
             menu_options = [(opt['text'], opt['key']) for opt in q['options']]
             
             choice = renpy.display_menu(menu_options)
-            
+
+            renpy.hide(rand_dosen[1])
             is_correct = (choice == q['correct_answer'])
+            result = None
+            for t in menu_options:
+                if t[1] == choice:
+                    result = t
             
-            renpy.say(n,"(Para dosen sedang mengevaluasi jawaban Anda...)")
-            
+            renpy.show('louisa-nah', at_list=[left,posisi_mc])
+            renpy.say(louisa, result[0])
+            renpy.say(None,"(Para dosen sedang mengevaluasi jawaban Kamu...)")
+
             try:
                 payload = {
                     "questionText": q['question'],
-                    "playerAnswer": choice,
+                    "playerAnswer": result[0],
                     "isCorrect": is_correct
                 }
                 
+                print(payload)
+
                 response = requests.post(dialogue_url, json=payload, timeout=60)
                 
                 if response.status_code == 200:
@@ -154,36 +166,35 @@ label quiz_loop:
                 store.current_dialogue = None
 
             if store.current_dialogue:
+                renpy.hide("louisa-nah")
                 if store.current_dialogue['dosen1'][0]:
-                    renpy.show("dosen", at_list=[left])
+                    renpy.show("dosen", at_list=[left,posisi_dosen], layer="screens")
                     renpy.say(dosen1,store.current_dialogue['dosen1'][0])
                     renpy.hide("dosen")
                 
                 if store.current_dialogue['dosen2'][0]:
-                    #renpy.show("dosen2", at_list=[center])
+                    renpy.show("dosen2", at_list=[center,posisi_dosen], layer="screens")
                     renpy.say(dosen2,store.current_dialogue['dosen2'][0])
                     #renpy.hide("dosen2")
                 
                 if store.current_dialogue['dosen3'][0]:
+                    renpy.show("dosen2", at_list=[right,posisi_dosen], layer="screens")
                     #renpy.show("dosen2", at_list=[center])
                     renpy.say(dosen3,store.current_dialogue['dosen3'][0])
                     #renpy.hide("dosen2")
                     
-                 
-                renpy.say(louisa, store.current_dialogue['louisa'][0])
+                print(store.current_dialogue['mahasiswa'][0])
+                renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[left,posisi_mc])
+                renpy.say(louisa, store.current_dialogue['mahasiswa'][1])
                 
 
             if is_correct:
-                renpy.say(n, "Jawaban Anda Benar!")
                 respect = min(max_respect, respect + respectOperation)
                 correct_answers += 1
             else:
-                renpy.say(n, f"Jawaban Anda Salah. (Jawaban: {q['correct_answer']})")
                 respect -= respectOperation
+            renpy.hide(store.current_dialogue['mahasiswa'][0])
             
-            if respect <= 0:
-                renpy.say(n, "respect Anda habis! Game Over.")
-                renpy.jump("game_over")
     
     jump quiz_complete
 

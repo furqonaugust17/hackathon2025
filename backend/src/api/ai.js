@@ -216,12 +216,19 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
 - Dosen2: Humoris/nyeletuk
 - Dosen3: Kalem/logis
 - Mahasiswa: Netral/sopan
+- Contoh Gugup: 'Ma-maaf, saya belum terlalu mendalami materi'
+- Pose mahasiswa (louisa-nangis, louisa-nah, louisa-netral, louisa-sombong, louisa-tengil)
 - ATURAN:
   1. MAKSIMAL 2 dosen berbicara.
-  2. Dosen yang diam diisi array string kosong: [""]
-  3. Mahasiswa WAJIB merespons.
-  4. Semua dialog SANGAT RINGKAS (maks 15 kata).
-  5. Gunakan narasi singkat (cth: (tersenyum miring)).
+  2. Dialog jangan terlalu kaku. santai tetapi masih suasana akademik
+  3. Dosen laki-laki semua
+  4. Dosen yang diam diisi array string kosong: [""]
+  5. Mahasiswa WAJIB merespons.
+  6. Ketika jawaban mahasiswa salah dialog menjadi gugup, tetapi kalau dialog seperti sombong tapi masih sopan dalam suasana akademik
+  7. Semua dialog SANGAT RINGKAS (maks 15 kata).
+  8. Gunakan narasi singkat (cth: (tersenyum miring)).
+  9. ketika ada jawaban, jangan ambil B. tetapi bisa ganti dengan "itu", "jawaban tersebut" dan atau bisa kalimat dari jawabannya (jangan terlalu kaku) 
+  10. buatkan pose untuk mahasiswa berdasarkan pose yang ada, pose harus sesuai dengan respon yang diberikan. jangan gabungkan dengan string respon. pastikan berada pada index 0. dan jangan pakai tanda kurung '()'
 - Anda HARUS mengembalikan HANYA satu objek JSON (bukan array).
 - Format: {"dosen1": ["..."], "dosen2": [""], "dosen3": ["..."], "mahasiswa": ["..."]}`;
 
@@ -233,17 +240,17 @@ Konteks Sidang:
 
 Tolong buatkan dialog JSON untuk respons para dosen dan mahasiswa.`;
 
-    const safetySettings = [
-        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-    ];
+    // const safetySettings = [
+    //     { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+    //     { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+    //     { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+    //     { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+    // ];
 
     const model = genAI.getGenerativeModel({
         model: "gemini-2.5-flash",
         systemInstruction: systemPrompt,
-        safetySettings: safetySettings
+        // safetySettings: safetySettings
     });
 
     const generationConfig = {
