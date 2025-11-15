@@ -15,6 +15,8 @@ define dosen3 = Character("Pak Jeffri", color="#90EE90", callback=type_sound)
 define dospem = Character("Pak Teddy", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
 define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen3')]
+define listLouisa4 = ['louisa-takut', 'louisa-nangis']
+define listLouisa7 = ['louisa-tengil', 'louisa-percaya-diri']
 
 image eileen movie = Movie(play="animation/vid.webm", size=(config.screen_width, config.screen_height))
 
@@ -158,8 +160,8 @@ label opening_sidang:
 label quiz_loop:
     
     $ correct_answers = 0
-    $ respectOperation = respect / len(store.quiz_questions)
-    
+    $ respectOperation = max_respect / len(store.quiz_questions)
+    $ confidenceOperation = max_confidence_bar / len(store.quiz_questions)
     python:
         import random
         for i, q in enumerate(store.quiz_questions):
@@ -186,7 +188,15 @@ label quiz_loop:
             
 
             renpy.hide_screen('countdown')
-            renpy.show('louisa-nah', at_list=[posisi_mc,idle_mc])
+
+            if(confidence_value < 40):
+                louisaExpression = random.choice(listLouisa4)
+            elif(confidence_value <= 70):
+                louisaExpression = random.choice(listLouisa7)
+            else:
+                louisaExpression = 'louisa-sombong'
+
+            renpy.show(louisaExpression, at_list=[posisi_mc,idle_mc])
             renpy.say(louisa, result[0])
             renpy.show("eileen movie")
             renpy.say(None,"(Para dosen sedang mengevaluasi jawaban Kamu...)")
@@ -213,7 +223,7 @@ label quiz_loop:
                 store.current_dialogue = None
 
             if store.current_dialogue:
-                renpy.hide("louisa-dapat-ide")
+                renpy.hide(louisaExpression)
                 if store.current_dialogue['dosen1'][0]:
                     renpy.show(f"frank-{store.current_dialogue['dosen1'][0]}", at_list=[right,posisi_dosen,idle_dosen1])
                     renpy.say(dosen1,store.current_dialogue['dosen1'][1])
@@ -234,9 +244,9 @@ label quiz_loop:
                 renpy.say(louisa, store.current_dialogue['mahasiswa'][1])
                 
             if(time >= 2 and is_correct):
-                confidence_value += 10
+                confidence_value += confidenceOperation
             else:
-                confidence_value -= 10
+                confidence_value -= confidenceOperation
 
             if is_correct:
                 respect = min(max_respect, respect + respectOperation)
