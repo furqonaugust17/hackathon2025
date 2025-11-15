@@ -14,9 +14,30 @@ define dosen2 = Character("Pak Bob", color="#ADD8E6", callback=type_sound)
 define dosen3 = Character("Pak Jeffri", color="#90EE90", callback=type_sound)
 define dospem = Character("Pak Teddy", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
-define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen3')]
+define listDosen = [
+    (dosen1, 'frank-santai'),
+    (dosen2, 'bob-tenang'),
+    (dosen3, 'jefri-senang')
+]
 define listLouisa4 = ['louisa-takut', 'louisa-nangis']
 define listLouisa7 = ['louisa-tengil', 'louisa-percaya-diri']
+define listDosen4 = [
+    (dosen1, 'frank-marah-besar'),
+    (dosen1, 'frank-bentak'),
+    (dosen1, 'frank-kesal'),
+    (dosen2, 'bob-nyeletuk'),
+    (dosen2, 'bob-menyindir'),
+    (dosen3, 'jefri-kesal'),
+    (dosen3, 'jefri-berpikir'),
+]
+define listDosen7 = [
+    (dosen1, 'frank-tegas'),
+    (dosen1, 'frank-santai'),
+    (dosen1, 'frank-datar'),
+    (dosen2, 'bob-cengengesan'),
+    (dosen3, 'jefri-yakin'),
+    (dosen3, 'jefri-senang'),
+]
 image jefri_datar = "jefri/jefri-datar.png"
 image frank_datar = "frank/frank-datar.png"
 image bob_tenang = "bob/bob-tenang.png"
@@ -297,16 +318,23 @@ label quiz_loop:
         for i, q in enumerate(store.quiz_questions):
             time = 5
             timer_range = 5
-            rand_dosen = random.choice(listDosen)
-            renpy.show(rand_dosen[1], at_list=[right,posisi_dosen])
-            renpy.say(rand_dosen[0], f"{q['question']}")
+
+            if(respect < 40):
+                dosenExpression = random.choice(listDosen4)
+            elif(respect <= 70):
+                dosenExpression = random.choice(listDosen7)
+            else:
+                dosenExpression = rand_dosen.choice(listDosen)
+
+            renpy.show(dosenExpression[1], at_list=[right,posisi_dosen])
+            renpy.say(dosenExpression[0], f"{q['question']}")
             
             menu_options = [(opt['text'], opt['key']) for opt in q['options']]
             
 
             renpy.show_screen('countdown')
             choice = renpy.display_menu(menu_options)
-            renpy.hide(rand_dosen[1])
+            renpy.hide(dosenExpression[1])
             renpy.with_statement(dissolve)
 
 
