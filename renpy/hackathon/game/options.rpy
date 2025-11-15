@@ -221,7 +221,7 @@ define config.window_hide_transition = Dissolve(.2)
 ## other number is the number of characters per second to type out.
 
 
-default preferences.text_cps = 20
+default preferences.text_cps = 60
 
 define sounds = ['sfx/ms.mp3']
 
