@@ -91,8 +91,9 @@ transform idle_dosen3:
     repeat
 
 transform posisi_mc:
+    xalign -0.1
     zoom 0.8   # 0.5 = 50% ukuran
-    yoffset 500  # Geser ke bawah sebanyak 100 piksel
+    yoffset 100  # Geser ke bawah sebanyak 100 piksel
     
 transform posisi_dosen:
     zoom 0.6   # 0.5 = 50% ukuran
