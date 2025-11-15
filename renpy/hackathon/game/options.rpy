@@ -91,6 +91,7 @@ transform idle_dosen3:
     linear 2.0 zoom 1.0
     repeat
 
+
 transform posisi_mc:
     xalign -0.1
     zoom 0.8   # 0.5 = 50% ukuran
