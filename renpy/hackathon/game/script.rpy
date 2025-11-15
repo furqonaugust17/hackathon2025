@@ -14,7 +14,7 @@ define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6", callback=type_so
 define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90", callback=type_sound)
 define dospem = Character("Dospem", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
-define listDosen = [dosen1, dosen2, dosen3]
+define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen2')]
 
 label start:
 
@@ -31,7 +31,7 @@ label start:
     # if confidence_bar > 50:
     #     show dosen at posisi_mc,left,idle_dosen1
     # else:
-    #     # show dosen2 at posisi_dosen,right,idle_dosen2
+    #     # show dosen2 at [posisi_dosen],right,idle_dosen2
     #     show dosen2 at posisi_mc,left,idle_dosen1
     
     louisa "Kenapa ya kaki gw berat banget? Serius, jalan dari tangga ke ruang siding doang, rasanya kayak habis lomba panjat tebing."
@@ -112,18 +112,22 @@ label quiz_loop:
         for i, q in enumerate(store.quiz_questions):
             
             rand_dosen = random.choice(listDosen)
-            renpy.say(rand_dosen, f"{q['question']}")
+            renpy.show(rand_dosen[1], at_list=[right,posisi_dosen], layer="screens")
+            renpy.say(rand_dosen[0], f"{q['question']}")
             
             menu_options = [(opt['text'], opt['key']) for opt in q['options']]
             
             choice = renpy.display_menu(menu_options)
-            
+
+            renpy.hide(rand_dosen[1])
             is_correct = (choice == q['correct_answer'])
             result = None
             for t in menu_options:
                 if t[1] == choice:
                     result = t
-            renpy.say(mahasiswa, result[0])
+            
+            renpy.show('louisa-nah', at_list=[left,posisi_mc])
+            renpy.say(louisa, result[0])
             renpy.say(None,"(Para dosen sedang mengevaluasi jawaban Kamu...)")
 
             try:
@@ -148,23 +152,26 @@ label quiz_loop:
                 store.current_dialogue = None
 
             if store.current_dialogue:
+                renpy.hide("louisa-nah")
                 if store.current_dialogue['dosen1'][0]:
-                    renpy.show("dosen", at_list=[left])
+                    renpy.show("dosen", at_list=[left,posisi_dosen], layer="screens")
                     renpy.say(dosen1,store.current_dialogue['dosen1'][0])
                     renpy.hide("dosen")
                 
                 if store.current_dialogue['dosen2'][0]:
-                    #renpy.show("dosen2", at_list=[center])
+                    renpy.show("dosen2", at_list=[center,posisi_dosen], layer="screens")
                     renpy.say(dosen2,store.current_dialogue['dosen2'][0])
                     #renpy.hide("dosen2")
                 
                 if store.current_dialogue['dosen3'][0]:
+                    renpy.show("dosen2", at_list=[right,posisi_dosen], layer="screens")
                     #renpy.show("dosen2", at_list=[center])
                     renpy.say(dosen3,store.current_dialogue['dosen3'][0])
                     #renpy.hide("dosen2")
                     
-                 
-                renpy.say(louisa, store.current_dialogue['louisa'][0])
+                print(store.current_dialogue['mahasiswa'][0])
+                renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[left,posisi_mc])
+                renpy.say(louisa, store.current_dialogue['mahasiswa'][1])
                 
 
             if is_correct:
@@ -172,6 +179,8 @@ label quiz_loop:
                 correct_answers += 1
             else:
                 respect -= respectOperation
+            renpy.hide(store.current_dialogue['mahasiswa'][0])
+            
     
     jump quiz_complete
 
