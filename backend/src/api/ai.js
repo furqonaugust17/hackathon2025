@@ -218,6 +218,9 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
 - Mahasiswa: Netral/sopan
 - Contoh Gugup: 'Ma-maaf, saya belum terlalu mendalami materi'
 - Pose mahasiswa (louisa-nangis, louisa-nah, louisa-netral, louisa-sombong, louisa-tengil)
+- Pose Dosen1 (kesal, menyindir, santai, marah-besar, tegas, bentak, datar)
+- Pose Dosen2 (berpikir, bingung, cengengesan, kesal, menyindir, nyeletuk, tenang)
+- Pose Dosen3 (berpikir, datar, kesal, puas, senang, yakin)
 - ATURAN:
   1. MAKSIMAL 2 dosen berbicara.
   2. Dialog jangan terlalu kaku. santai tetapi masih suasana akademik
@@ -228,7 +231,7 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
   7. Semua dialog SANGAT RINGKAS (maks 15 kata).
   8. Gunakan narasi singkat (cth: (tersenyum miring)).
   9. ketika ada jawaban, jangan ambil B. tetapi bisa ganti dengan "itu", "jawaban tersebut" dan atau bisa kalimat dari jawabannya (jangan terlalu kaku) 
-  10. buatkan pose untuk mahasiswa berdasarkan pose yang ada, pose harus sesuai dengan respon yang diberikan. jangan gabungkan dengan string respon. pastikan berada pada index 0. dan jangan pakai tanda kurung '()'
+  10. buatkan pose untuk mahasiswa dan dosen berdasarkan pose yang ada, pose harus sesuai dengan respon yang diberikan. jangan gabungkan dengan string respon. pastikan berada pada index 0. dan jangan pakai tanda kurung '()'
 - Anda HARUS mengembalikan HANYA satu objek JSON (bukan array).
 - Format: {"dosen1": ["..."], "dosen2": [""], "dosen3": ["..."], "mahasiswa": ["..."]}`;
 

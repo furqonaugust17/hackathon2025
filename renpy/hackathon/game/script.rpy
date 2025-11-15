@@ -8,13 +8,15 @@ define dialogue_url = "http://localhost:3000/generate-dialogue"
 
 
 define flash = Fade(.1, .1, .1, color="#ffffff")
-define louisa = Character("louisa", color="#c8ffc8",callback=type_sound)
-define dosen1 = Character("Dosen 1 (Sarkas)", color="#FFC0CB", callback=type_sound)
-define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6", callback=type_sound)
-define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90", callback=type_sound)
-define dospem = Character("Dospem", color="#FFFFA0", callback=type_sound)
+define louisa = Character("Louisa", color="#c8ffc8",callback=type_sound)
+define dosen1 = Character("Mr.Frank", color="#FFC0CB", callback=type_sound)
+define dosen2 = Character("Pak Bob", color="#ADD8E6", callback=type_sound)
+define dosen3 = Character("Pak Jeffri", color="#90EE90", callback=type_sound)
+define dospem = Character("Pak Teddy", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
-define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen2')]
+define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen3')]
+
+image eileen movie = Movie(play="animation/vid.webm", size=(config.screen_width, config.screen_height))
 
 label start:
 
@@ -104,32 +106,37 @@ harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war
             renpy.jump("start")
 
 label quiz_loop:
+    
     $ correct_answers = 0
     $ respectOperation = respect / len(store.quiz_questions)
-
+    
     python:
         import random
         for i, q in enumerate(store.quiz_questions):
             
             rand_dosen = random.choice(listDosen)
-            renpy.show(rand_dosen[1], at_list=[right,posisi_dosen], layer="screens")
+            renpy.show(rand_dosen[1], at_list=[right,posisi_dosen])
             renpy.say(rand_dosen[0], f"{q['question']}")
             
             menu_options = [(opt['text'], opt['key']) for opt in q['options']]
             
-            choice = renpy.display_menu(menu_options)
 
+            choice = renpy.display_menu(menu_options)
             renpy.hide(rand_dosen[1])
+            renpy.with_statement(dissolve)
+
+
             is_correct = (choice == q['correct_answer'])
             result = None
             for t in menu_options:
                 if t[1] == choice:
                     result = t
             
-            renpy.show('louisa-nah', at_list=[left,posisi_mc])
+            renpy.show('louisa-nah', at_list=[posisi_mc,idle_mc])
             renpy.say(louisa, result[0])
+            renpy.show("eileen movie")
             renpy.say(None,"(Para dosen sedang mengevaluasi jawaban Kamu...)")
-
+            renpy.hide("eileen movie")
             try:
                 payload = {
                     "questionText": q['question'],
@@ -152,25 +159,24 @@ label quiz_loop:
                 store.current_dialogue = None
 
             if store.current_dialogue:
-                renpy.hide("louisa-nah")
+                renpy.hide("louisa-dapat-ide")
                 if store.current_dialogue['dosen1'][0]:
-                    renpy.show("dosen", at_list=[left,posisi_dosen], layer="screens")
-                    renpy.say(dosen1,store.current_dialogue['dosen1'][0])
-                    renpy.hide("dosen")
+                    renpy.show(f"frank-{store.current_dialogue['dosen1'][0]}", at_list=[right,posisi_dosen,idle_dosen1])
+                    renpy.say(dosen1,store.current_dialogue['dosen1'][1])
+                    renpy.hide(f"frank-{store.current_dialogue['dosen1'][0]}")
                 
                 if store.current_dialogue['dosen2'][0]:
-                    renpy.show("dosen2", at_list=[center,posisi_dosen], layer="screens")
-                    renpy.say(dosen2,store.current_dialogue['dosen2'][0])
-                    #renpy.hide("dosen2")
+                    renpy.show(f"bob-{store.current_dialogue['dosen2'][0]}", at_list=[right,posisi_dosen,idle_dosen2])
+                    renpy.say(dosen2,store.current_dialogue['dosen2'][1])
+                    renpy.hide(f"bob-{store.current_dialogue['dosen2'][0]}")
                 
                 if store.current_dialogue['dosen3'][0]:
-                    renpy.show("dosen2", at_list=[right,posisi_dosen], layer="screens")
-                    #renpy.show("dosen2", at_list=[center])
-                    renpy.say(dosen3,store.current_dialogue['dosen3'][0])
-                    #renpy.hide("dosen2")
+                    renpy.show(f"jefri-{store.current_dialogue['dosen3'][0]}", at_list=[right,posisi_dosen,idle_dosen3])
+                    renpy.say(dosen3,store.current_dialogue['dosen3'][1])
+                    renpy.hide(f"jefri-{store.current_dialogue['dosen3'][0]}")
                     
                 print(store.current_dialogue['mahasiswa'][0])
-                renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[left,posisi_mc])
+                renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[posisi_mc])
                 renpy.say(louisa, store.current_dialogue['mahasiswa'][1])
                 
 
