@@ -63,15 +63,138 @@ label start:
     louisa "Dan hari ini… , my times is come. Jalan ke pintu sidang doang berasa kayak mau masuk arena gladiator."
     louisa "Harapan gw simpel banget: lulus, senyum, pulang, turu."
     hide louisa-sombong
+    # =========================
+    # MENU: galau, songong, gugup
+    # =========================
+    menu:
+        louisa "Gimana mood gw masuk pintu ini?"
 
-    # show dosen with flash
-    # pause 0.1
-    # show dosen at komedi_pop with hpunch
-    # pause 0.1
-    # with vpunch
-    # hide dosen
-    
+        "Opsi optimis":
+            jump scene1_optimis
+
+        "Opsi gugup":
+            jump scene1_gugup
+
+        "Opsi songong":
+            jump scene1_songong
+
+
+# ================
+# SCENE 1 VERSI OPTIMIS
+# ================
+label scene1_optimis:
+
+    louisa "OKE GIRL THIS IS YOUR MOMENT. Ini panggung lo. Saatnya LO BERSINAR."
+    louisa "Dosennya nanya apa juga hayuk. Mental gw udah dilas."
+
+    jump scene2
+
+
+# ================
+# SCENE 1 VERSI GUGUP
+# ================
+label scene1_gugup:
+
+    louisa "Tarik napas… buang… oh my god jantung gw lari duluan."
+    louisa "Astagaa pintu aja bikin lutut gw geter. Masuk nih? masuk nggak ya—YA MASUK."
+
+    jump scene2
+
+
+# ================
+# SCENE 1 VERSI SONGONG
+# ================
+label scene1_songong:
+
+    louisa "HAHAHA pintu? Serius? PINTU aja lo pikir bisa ngehalangin gw?"
+    louisa "Gw masuk, ruangan geter woi. Ini sidang, bukan PvP ranked. Gw udah OP."
+
+    jump scene2
+
+
+# =========================
+# SCENE 2 — Masuk Ruangan Sendirian
+# Frame 5
+# =========================
+label scene2:
+
+    louisa "Beh… sepi amat. Kenapa ruangan sidang bisa nyeremin padahal kosong?"
+    louisa "Kursi-kursinya ngeliatin gw kayak bilang: ‘nih anak kuat gak ya mentalnya?’"
+    louisa "Belum mulai aja gw udah di-judge dekorasi ruangan."
+
+    # Menu Choice 2: Mood ruangan kosong
+    menu:
+        "Opsi optimis":
+            jump scene2_optimis
+
+        "Opsi gugup":
+            jump scene2_gugup
+
+        "Opsi songong":
+            jump scene2_songong
+
+
+label scene2_optimis:
+    louisa "Oke, ruangan kosong. PERFECT. Waktu recharge aura dan latihan senyum dulu."
+    louisa "Kursi-kursinya kayak cheerleader bilang ‘GO LOUISA GO!’."
+    jump scene3
+
+
+label scene2_gugup:
+    louisa "YA AMPUN KOSONG?? Kenapa hening kayak film horor jam 2 pagi?!"
+    louisa "Kursi-kursinya kayak: ‘kasian nih anak, bentar lagi mentalnya hancur’."
+    jump scene3
+
+
+label scene2_songong:
+    louisa "Sepi? Bagus. Ruangan ini tau diri, nunggu gw masuk dulu."
+    louisa "Gw masuk, ruangan geter woi. Dosen nanya? Gw counter.Kursi-kursinya aja bilang: ‘silakan duduk kalau kamu siap menguasai kami, my king’."
+    jump scene3
+
+
+# =========================
+# SCENE 3 — DOSEN MASUK SATU PER SATU
+# =========================
+label scene3:
+
+    # Dosen 1 masuk
+    dosen1 "Selamat pagi. Louisa, ya? Sudah siap?"
+
+    louisa "Siap, Pak…"
+    louisa "(Suara bapak adem banget. Kayak marah pun tetep lembut.)"
+    louisa "(Please universe… vibes hari ini vibes beliau aja.)"
+
+    # Dosen 2 masuk
+    dosen2 "I mean… kalau ada dosen masuk sambil bawa kopi dan roti, berarti dunia belum sehancur itu."
+
+    louisa "Garing sih... tapi lumayan nurunin tegang."
+    louisa "Kalau ada dosen masuk bawa kopi dan roti, berarti dunia masih aman."
+
+    # Dosen 3 masuk (final boss)
+    dosen3 "Kenapa belum mulai? Mahasiswa sudah datang, kan? Cepat, jangan buang waktu."
+
+    louisa "…dan datanglah final boss-nya."
+    louisa "Dibilang: ‘beliau nggak marah kok… cuma pake tekanan jiwa’."
+    louisa "Tatapannya aja bikin sistem internal gw error."
+
+    jump scene4
+
+
+# =========================
+# SCENE 4 — KETIGANYA DUDUK
+# =========================
+label scene4:
+
+    dosen1 "Baik, Louisa. Kamu bisa mulai presentasinya."
+
+    louisa "Tiga pasang mata fokus ke gw. Vibes-nya beda semua: adem, chaotic, horor."
+    louisa "Gw berdiri kayak karakter game baru masuk cutscene."
+    louisa "Oke… deep breath. Game mulai."
+    louisa "Semoga gw keluar dari ruangan ini masih dalam bentuk manusia."
+
     louisa "Nih alasan gw kenapa revisi mulu."
+
+    return
     
 
     
@@ -208,19 +331,19 @@ label quiz_loop:
             if store.current_dialogue:
                 renpy.hide("louisa-dapat-ide")
                 if store.current_dialogue['dosen1'][0]:
-                    renpy.show("dosen", at_list=[right,posisi_dosen,idle_dosen1])
-                    renpy.say(dosen1,store.current_dialogue['dosen1'][0])
-                    renpy.hide("dosen")
+                    renpy.show(f"frank-{store.current_dialogue['dosen1'][0]}", at_list=[right,posisi_dosen,idle_dosen1])
+                    renpy.say(dosen1,store.current_dialogue['dosen1'][1])
+                    renpy.hide(f"frank-{store.current_dialogue['dosen1'][0]}")
                 
                 if store.current_dialogue['dosen2'][0]:
-                    renpy.show("dosen2", at_list=[right,posisi_dosen,idle_dosen2])
-                    renpy.say(dosen2,store.current_dialogue['dosen2'][0])
-                    renpy.hide("dosen2")
+                    renpy.show(f"bob-{store.current_dialogue['dosen2'][0]}", at_list=[right,posisi_dosen,idle_dosen2])
+                    renpy.say(dosen2,store.current_dialogue['dosen2'][1])
+                    renpy.hide(f"bob-{store.current_dialogue['dosen2'][0]}")
                 
                 if store.current_dialogue['dosen3'][0]:
-                    renpy.show("dosen3", at_list=[right,posisi_dosen,idle_dosen3])
-                    renpy.say(dosen3,store.current_dialogue['dosen3'][0])
-                    renpy.hide("dosen3")
+                    renpy.show(f"jefri-{store.current_dialogue['dosen3'][0]}", at_list=[right,posisi_dosen,idle_dosen3])
+                    renpy.say(dosen3,store.current_dialogue['dosen3'][1])
+                    renpy.hide(f"jefri-{store.current_dialogue['dosen3'][0]}")
                     
                 print(store.current_dialogue['mahasiswa'][0])
                 renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[posisi_mc])
@@ -232,7 +355,7 @@ label quiz_loop:
                 correct_answers += 1
             else:
                 respect -= respectOperation
-                renpy.hide(store.current_dialogue['mahasiswa'][0])
+            renpy.hide(store.current_dialogue['mahasiswa'][0])
             
     
     jump quiz_complete
