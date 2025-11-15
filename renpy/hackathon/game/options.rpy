@@ -3,6 +3,103 @@
 ## Lines beginning with two '#' marks are comments, and you shouldn't uncomment
 ## them. Lines beginning with a single '#' mark are commented-out code, and you
 ## may want to uncomment them when appropriate.
+ 
+
+
+
+
+
+### Bars ######################################################################################
+
+
+
+default respect = 50
+define max_respect = 100
+define respectOperation = 10
+
+screen respect_bar:
+    frame:
+        xalign 0.9
+        yalign 0.1
+        xminimum 300
+        yminimum 40
+        has vbox
+        spacing 2
+        text "Respect Bar" size 20 color "#efefef" xalign 0.5
+        bar:
+            value respect
+            range max_respect
+            ysize 20
+            xsize 300
+
+define confidence_bar = 50
+define max_confidence_bar = 100
+
+screen confidence_bar():
+    frame:
+        xalign 0.1
+        yalign 0.1
+        xminimum 300
+        yminimum 40
+        has vbox
+        spacing 2
+
+        # Teks di atas bar
+        text "Confidence Bar" size 20 color "#efefef" xalign 0.5
+
+        # Bar itu sendiri
+        bar:
+            value confidence_bar
+            range max_confidence_bar
+            xsize 300
+            ysize 20
+
+
+        
+#end bars ####################################################################################
+
+#transform chara###############################################################################
+
+transform komedi_pop:
+    yalign 1.5
+    zoom 0.7
+    easeout_back .3 yalign 0.5 zoom 1.0
+    on show:
+        linear .05 xoffset -8
+        linear .05 xoffset 8
+        linear .05 xoffset 0
+
+transform idle_mc:
+    linear 1.2 yoffset -6
+    linear 1.2 yoffset 0
+    repeat
+
+transform idle_dosen1:
+    linear 0.9 yoffset -10
+    linear 0.6 yoffset 0
+    repeat
+
+transform idle_dosen2:
+    linear 0.7 yoffset -8
+    linear 0.4 yoffset 0
+    repeat
+
+transform idle_dosen3:
+    zoom 1.0
+    linear 2.0 zoom 1.03
+    linear 2.0 zoom 1.0
+    repeat
+
+transform posisi_mc:
+    zoom 0.8   # 0.5 = 50% ukuran
+    yoffset 500  # Geser ke bawah sebanyak 100 piksel
+    
+transform posisi_dosen:
+    zoom 0.6   # 0.5 = 50% ukuran
+    yoffset 300  # Geser ke bawah sebanyak 100 piksel
+#end transform##############################################################################
+
+
 
 
 ## Basics ######################################################################
@@ -73,8 +170,8 @@ define config.has_voice = True
 
 ## Entering or exiting the game menu.
 
-define config.enter_transition = dissolve
-define config.exit_transition = dissolve
+define config.enter_transition = vpunch
+define config.exit_transition = hpunch
 
 
 ## Between screens of the game menu.
@@ -120,7 +217,43 @@ define config.window_hide_transition = Dissolve(.2)
 ## Controls the default text speed. The default, 0, is infinite, while any
 ## other number is the number of characters per second to type out.
 
-default preferences.text_cps = 0
+
+default preferences.text_cps = 20
+
+define sounds = ['sfx/ms.mp3']
+
+init python:
+    def type_sound(event, interact=True, **kwargs):
+        if not interact:
+            return
+
+        if event == "show": #if text's being written by character, spam typing sounds until the text ends
+            renpy.sound.play(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            renpy.sound.queue(renpy.random.choice(sounds))
+            #dumb way to do it but it works, dunno if it causes memory leaks but it's almost 6AM :v
+
+
+
+        elif event == "slow_done" or event == "end":
+            renpy.sound.stop()
+
+#example of a character with the typing sound
+define a = Character("Character with typing", callback=type_sound)
+
+
+#just don't add the character callback if you don't want that ound
+define NoType = Character("Character without typing")
 
 
 ## The default auto-forward delay. Larger numbers lead to longer waits, with 0

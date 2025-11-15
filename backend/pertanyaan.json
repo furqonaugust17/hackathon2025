@@ -1,338 +1,92 @@
 [
   {
-    "question": "Metode pengembangan sistem apa yang secara konsisten digunakan di ketiga kajian pustaka yang disebutkan (UD Sido Asih, Fellanova Furniture, Toko Furniture Bahagia)?",
+    "question": "Penelitian yang dilakukan oleh Ramadhan (2022) bertujuan utama untuk mengatasi permasalahan apa?",
     "options": [
       {
         "key": "A",
-        "text": "Agile"
+        "text": "Kesulitan dalam memantau aktivitas bisnis secara efisien oleh pemilik usaha."
       },
       {
         "key": "B",
-        "text": "Scrum"
+        "text": "Pencatatan transaksi manual yang sering menimbulkan kesalahan dan keterlambatan dalam pengolahan data."
       },
       {
         "key": "C",
+        "text": "Kurangnya sistem notifikasi otomatis kepada nasabah mengenai status transaksi."
+      }
+    ],
+    "correct_answer": "B"
+  },
+  {
+    "question": "Framework apa yang digunakan dalam penelitian oleh Putra dan Hidayat (2023) untuk mengembangkan sistem informasi gadai?",
+    "options": [
+      {
+        "key": "A",
         "text": "Waterfall"
-      }
-    ],
-    "correct_answer": "C",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          "(Menghela napas pelan) Akhirnya ada yang benar."
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          ""
-        ],
-        "mahasiswa": [
-          "Alhamdulillah, Pak."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          "(Tersenyum miring) Coba lihat di bab berapa itu?"
-        ],
-        "dosen3": [
-          "Anda yakin dengan jawaban itu?"
-        ],
-        "mahasiswa": [
-          "(Menunduk) Maaf, Pak."
-        ]
-      }
-    }
-  },
-  {
-    "question": "Kajian pustaka manakah yang secara spesifik menyebutkan penggunaan framework Laravel dalam pengembangannya?",
-    "options": [
-      {
-        "key": "A",
-        "text": "Sistem Informasi Penjualan Online Furniture Berbasis Website UD Sido Asih"
       },
       {
         "key": "B",
-        "text": "Rancang Bangun Sistem Informasi Penjualan Furniture pada Fellanova Furniture Berbasis Web"
+        "text": "CodeIgniter"
       },
       {
         "key": "C",
-        "text": "Perancangan Sistem Informasi Dalam Penjualan Pada Toko Furniture Bahagia Berbasis Web"
+        "text": "PHP Native"
       }
     ],
-    "correct_answer": "B",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          "(Tertawa kecil) Sudah belajar sampai framework, ya."
-        ],
-        "dosen3": [
-          "Tepat sekali, itu ada di kajian pustaka."
-        ],
-        "mahasiswa": [
-          "Terima kasih, Bu."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          "Jangan asal tembak, baca lagi Bab II."
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          ""
-        ],
-        "mahasiswa": [
-          "(Panik) Mohon maaf, Pak."
-        ]
-      }
-    }
+    "correct_answer": "B"
   },
   {
-    "question": "Menurut referensi [4] yang dikutip dalam teks, apa definisi dari Sistem Informasi?",
+    "question": "Menurut teks, apa tujuan utama integrasi WhatsApp Gateway pada sistem informasi notifikasi otomatis yang dikembangkan Lestari (2024)?",
     "options": [
       {
         "key": "A",
-        "text": "Kumpulan perangkat lunak untuk mengelola data dan laporan."
+        "text": "Mempercepat proses pengembangan sistem."
       },
       {
         "key": "B",
-        "text": "Himpunan komponen yang saling berkaitan untuk mendukung pengambilan keputusan."
+        "text": "Meningkatkan efektivitas komunikasi antara sistem dan pengguna melalui notifikasi otomatis."
       },
       {
         "key": "C",
-        "text": "Proses manual pencatatan dan distribusi informasi secara terstruktur."
+        "text": "Memudahkan petugas administrasi dalam mencatat data nasabah secara digital."
       }
     ],
-    "correct_answer": "B",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          "Ya, definisi itu sudah sesuai referensi."
-        ],
-        "mahasiswa": [
-          "Betul, Pak. Sesuai kutipan."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          "Itu jawaban umum, bukan definisi menurut [4]."
-        ],
-        "dosen2": [
-          "(Berdehem kecil) Referensinya dibaca tidak?"
-        ],
-        "dosen3": [
-          ""
-        ],
-        "mahasiswa": [
-          "(Gugup) Sepertinya saya salah ingat, Pak."
-        ]
-      }
-    }
+    "correct_answer": "B"
   },
   {
-    "question": "Berdasarkan teks, apa salah satu keunggulan utama aplikasi berbasis web dibandingkan aplikasi desktop?",
+    "question": "Menurut Jogiyanto (2019), apa yang dimaksud dengan Sistem Informasi?",
     "options": [
       {
         "key": "A",
-        "text": "Membutuhkan instalasi program secara lokal dengan berbagai pengaturan rumit."
+        "text": "Sebuah perangkat lunak yang hanya berfungsi untuk mengolah data keuangan."
       },
       {
         "key": "B",
-        "text": "Mudah diakses oleh pengguna melalui browser tanpa instalasi lokal."
+        "text": "Kesatuan yang terdiri dari perangkat keras, perangkat lunak, data, prosedur, dan sumber daya manusia yang saling berinteraksi untuk mendukung pengambilan keputusan."
       },
       {
         "key": "C",
-        "text": "Hanya dapat diakses melalui perangkat tertentu yang kompatibel."
+        "text": "Kumpulan data yang disimpan dalam basis data relasional."
       }
     ],
-    "correct_answer": "B",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          "(Menyilangkan tangan) Lumayan, tidak terlalu meleset."
-        ],
-        "dosen3": [
-          "Itu memang keuntungan utamanya."
-        ],
-        "mahasiswa": [
-          "Iya, Bu, kemudahan aksesnya."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          "Coba bedakan web dan desktop, jangan terbalik."
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          ""
-        ],
-        "mahasiswa": [
-          "(Meringis) Oh iya, itu kelemahan desktop, Pak."
-        ]
-      }
-    }
+    "correct_answer": "B"
   },
   {
-    "question": "Dalam konteks pengembangan web, apa peran utama HyperText Markup Language (HTML) seperti yang dijelaskan dalam teks?",
+    "question": "Mengapa aplikasi berbasis web dipilih untuk proyek sistem pengelolaan bisnis penggadaian ini?",
     "options": [
       {
         "key": "A",
-        "text": "Sebagai bahasa pemrograman sisi server yang menyatu dengan HTML."
+        "text": "Karena membutuhkan instalasi tambahan di perangkat pengguna untuk keamanan yang lebih baik."
       },
       {
         "key": "B",
-        "text": "Untuk menentukan tata tampilan web atau informasi statis."
+        "text": "Untuk membatasi akses sistem hanya pada jaringan internal perusahaan."
       },
       {
         "key": "C",
-        "text": "Sebagai framework berbasis MVC untuk meningkatkan kualitas perangkat lunak."
+        "text": "Karena memiliki keunggulan dari sisi aksesibilitas, dapat dijalankan melalui berbagai perangkat selama terhubung ke internet."
       }
     ],
-    "correct_answer": "B",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          "Cukup presisi, tidak ngawur."
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          ""
-        ],
-        "mahasiswa": [
-          "Sesuai yang saya pahami, Pak."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          "(Menggeleng pelan) Itu kan definisi PHP atau Laravel. Keliru, 'kan?"
-        ],
-        "dosen3": [
-          "Tampaknya Anda mencampuradukkan konsep."
-        ],
-        "mahasiswa": [
-          "(Menunduk) Maaf, Pak. Saya salah."
-        ]
-      }
-    }
-  },
-  {
-    "question": "Menurut teks, apa definisi dari MySQL?",
-    "options": [
-      {
-        "key": "A",
-        "text": "Sebuah bahasa pemrograman untuk antarmuka pengguna web."
-      },
-      {
-        "key": "B",
-        "text": "Framework pengembangan situs web berbasis MVC."
-      },
-      {
-        "key": "C",
-        "text": "Database Management System (DBMS) open source yang mendukung multiuser."
-      }
-    ],
-    "correct_answer": "C",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          "Definisi yang tepat untuk MySQL."
-        ],
-        "mahasiswa": [
-          "Iya, itu tertulis di Bab 2, Pak."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          "Anda tidak membaca bagian MySQL dengan seksama."
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          "Itu bukan MySQL, coba cek lagi."
-        ],
-        "mahasiswa": [
-          "(Gugup) Salah ya, Pak? Maaf."
-        ]
-      }
-    }
-  },
-  {
-    "question": "Apa tujuan utama seorang analis sistem menggunakan Flowchart dalam perancangan sistem?",
-    "options": [
-      {
-        "key": "A",
-        "text": "Untuk merancang tampilan antarmuka pengguna secara visual."
-      },
-      {
-        "key": "B",
-        "text": "Sebagai bukti dokumentasi untuk menjelaskan gambaran logis sistem kepada programmer."
-      },
-      {
-        "key": "C",
-        "text": "Untuk membuat laporan keuangan otomatis."
-      }
-    ],
-    "correct_answer": "B",
-    "responses": {
-      "correct": {
-        "dosen1": [
-          "Jawaban yang cukup baik."
-        ],
-        "dosen2": [
-          ""
-        ],
-        "dosen3": [
-          ""
-        ],
-        "mahasiswa": [
-          "Terima kasih, Pak."
-        ]
-      },
-      "incorrect": {
-        "dosen1": [
-          ""
-        ],
-        "dosen2": [
-          "(Tersenyum miring) Sudah baca bab terakhir belum?"
-        ],
-        "dosen3": [
-          "Fungsinya bukan itu, silakan diperbaiki."
-        ],
-        "mahasiswa": [
-          "(Menunduk) Maaf, Pak."
-        ]
-      }
-    }
+    "correct_answer": "C"
   }
 ]

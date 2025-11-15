@@ -1,33 +1,47 @@
-﻿default health = 100
-define max_health = 100
-define healthOperation = 10
-default quiz_questions = []
+﻿default quiz_questions = []
 default current_dialogue = None
 
 define quiz_url = "http://localhost:3000/generate-quiz"
 define dialogue_url = "http://localhost:3000/generate-dialogue"
 
-screen health_bar:
-    bar:
-        value health
-        range max_health
-        xalign 0.5
-        yalign 0.1
-        ysize 20
-        xsize 300
 
-define mahasiswa = Character("Mahasiswa", color="#c8ffc8")
-define dosen1 = Character("Dosen 1 (Sarkas)", color="#FFC0CB")
-define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6")
-define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90")
+
+
+define flash = Fade(.1, .1, .1, color="#ffffff")
+define mahasiswa = Character("Mahasiswa", color="#c8ffc8",callback=type_sound)
+define dosen1 = Character("Dosen 1 (Sarkas)", color="#FFC0CB", callback=type_sound)
+define dosen2 = Character("Dosen 2 (Humoris)", color="#ADD8E6", callback=type_sound)
+define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90", callback=type_sound)
+define dospem = Character("Dospem", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
 
 label start:
-    scene black
+    scene kampus
     with fade
-    show screen health_bar
+    show screen respect_bar
+    show screen confidence_bar
 
-    n "Selamat datang di Kuis TA!"
+    show dosen at posisi_mc,left,idle_dosen1
+    show dosen2 at posisi_dosen,right,idle_dosen2
+    mahasiswa "Perkenalkan, gue Siti. Mahasiswi Semester sepuluh… iya, masih di sini."
+    mahasiswa "Gue sama yang namanya ‘revisi’… udah lama banget bareng. Terlalu lama malah."
+    mahasiswa "Gua udah muak… gue udah capek. Pokoknya semester ini gw harus{w=1.2}—"
+    mahasiswa "LULUS."
+
+    mahasiswa "Maju lo sini trio sableg!"
+    mahasiswa "Gw bantai lo pada!"
+
+    # show dosen with flash
+    # pause 0.1
+    # show dosen at komedi_pop with hpunch
+    # pause 0.1
+    # with vpunch
+    # hide dosen
+    
+    mahasiswa "Nih alasan gw kenapa revisi mulu."
+    
+
+    
     
     python:
         import requests
@@ -79,7 +93,7 @@ label start:
 
 label quiz_loop:
     $ correct_answers = 0
-    $ healthOperation = health / len(store.quiz_questions)
+    $ respectOperation = respect / len(store.quiz_questions)
 
     python:
         for i, q in enumerate(store.quiz_questions):
@@ -128,14 +142,14 @@ label quiz_loop:
 
             if is_correct:
                 renpy.say(n, "Jawaban Anda Benar!")
-                health = min(max_health, health + healthOperation)
+                respect = min(max_respect, respect + respectOperation)
                 correct_answers += 1
             else:
                 renpy.say(n, f"Jawaban Anda Salah. (Jawaban: {q['correct_answer']})")
-                health -= healthOperation
+                respect -= respectOperation
             
-            if health <= 0:
-                renpy.say(n, "Health Anda habis! Game Over.")
+            if respect <= 0:
+                renpy.say(n, "respect Anda habis! Game Over.")
                 renpy.jump("game_over")
     
     jump quiz_complete
