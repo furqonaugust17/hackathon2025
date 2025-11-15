@@ -9,6 +9,7 @@
 
 
 
+
 ### Bars ######################################################################################
 
 define timer_range = 0
@@ -50,7 +51,7 @@ define confidenceOperation = 10
 
 screen confidence_bar():
     frame:
-        xalign 0.1
+        xalign 0.13
         yalign 0.1
         xminimum 300
         yminimum 40
@@ -103,14 +104,16 @@ transform idle_dosen3:
     linear 2.0 zoom 1.0
     repeat
 
+
 transform posisi_mc:
-    xalign -0.1
+    xalign 0.0
     zoom 0.8   # 0.5 = 50% ukuran
     yoffset 100  # Geser ke bawah sebanyak 100 piksel
     
 transform posisi_dosen:
-    zoom 0.6   # 0.5 = 50% ukuran
-    yoffset 300  # Geser ke bawah sebanyak 100 piksel
+    zoom 0.8   # 0.5 = 50% ukuran
+    yoffset 500  # Geser ke bawah sebanyak 100 piksel
+
 #end transform##############################################################################
 
 
@@ -232,7 +235,7 @@ define config.window_hide_transition = Dissolve(.2)
 ## other number is the number of characters per second to type out.
 
 
-default preferences.text_cps = 20
+default preferences.text_cps = 60
 
 define sounds = ['sfx/ms.mp3']
 
