@@ -15,8 +15,13 @@ define dosen3 = Character("Pak Jeffri", color="#90EE90", callback=type_sound)
 define dospem = Character("Pak Teddy", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
 define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen3')]
+image jefri_datar = "jefri/jefri-datar.png"
+image frank_datar = "frank/frank-datar.png"
+image bob_tenang = "bob/bob-tenang.png"
 
-image eileen movie = Movie(play="animation/vid.webm", size=(config.screen_width, config.screen_height))
+
+image eileen movie = Movie(play="animation/vidw.webm", size=(config.screen_width, config.screen_height))
+
 
 label start:
 
@@ -44,6 +49,9 @@ label start:
     hide louisa-nangis
 
     show louisa-tengil at posisi_mc,idle_mc
+    show jefri_datar at right,posisi_dosen,idle_dosen1
+    show frank_datar at right,posisi_dosen,idle_dosen1
+    show bob_tenang at right,posisi_dosen,idle_dosen1
     louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?"
     hide eileen movie
     scene kampus 
@@ -69,10 +77,12 @@ label start:
     menu:
         louisa "Gimana mood gw masuk pintu ini?"
 
-        "Opsi optimis":
+        "Sepi? Bagus. Artinya ruangan ini tau diri, nunggu gw masuk dulu sebelum mulai beraksi.
+        Kursi-kursinya aja sampe kayak nurut: ‘silakan duduk kalau kamu siap menguasai kami, my king’.":
             jump scene1_optimis
 
-        "Opsi gugup":
+        "Sepi? Bagus. Artinya ruangan ini tau diri, nunggu gw masuk dulu sebelum mulai beraksi.
+        Kursi-kursinya aja sampe kayak nurut: ‘silakan duduk kalau kamu siap menguasai kami, my king’.": 
             jump scene1_gugup
 
         "Opsi songong":
@@ -123,7 +133,10 @@ label scene2:
     louisa "Belum mulai aja gw udah di-judge dekorasi ruangan."
 
     # Menu Choice 2: Mood ruangan kosong
+    
     menu:
+        louisa "Gimana mood gw masuk pintu ini?"
+
         "Opsi optimis":
             jump scene2_optimis
 
@@ -194,8 +207,7 @@ label scene4:
 
     louisa "Nih alasan gw kenapa revisi mulu."
 
-    return
-    
+
 
     
     
@@ -283,7 +295,8 @@ label quiz_loop:
     python:
         import random
         for i, q in enumerate(store.quiz_questions):
-            
+            time = 5
+            timer_range = 5
             rand_dosen = random.choice(listDosen)
             renpy.show(rand_dosen[1], at_list=[right,posisi_dosen])
             renpy.say(rand_dosen[0], f"{q['question']}")
@@ -291,6 +304,7 @@ label quiz_loop:
             menu_options = [(opt['text'], opt['key']) for opt in q['options']]
             
 
+            renpy.show_screen('countdown')
             choice = renpy.display_menu(menu_options)
             renpy.hide(rand_dosen[1])
             renpy.with_statement(dissolve)
@@ -349,6 +363,10 @@ label quiz_loop:
                 renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[posisi_mc])
                 renpy.say(louisa, store.current_dialogue['mahasiswa'][1])
                 
+            if(time >= 2 and is_correct):
+                confidence_value += 10
+            else:
+                confidence_value -= 10
 
             if is_correct:
                 respect = min(max_respect, respect + respectOperation)
