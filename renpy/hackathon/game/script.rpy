@@ -22,7 +22,6 @@ label start:
 
     
 
-    scene kampus
     with fade
     show screen respect_bar
     show screen confidence_bar
@@ -35,15 +34,35 @@ label start:
     # else:
     #     # show dosen2 at [posisi_dosen],right,idle_dosen2
     #     show dosen2 at posisi_mc,left,idle_dosen1
-    
-    louisa "Kenapa ya kaki gw berat banget? Serius, jalan dari tangga ke ruang siding doang, rasanya kayak habis lomba panjat tebing."
-    louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?,{w=1.0} MUATAMU CUMA SIDANG.{w=1.0} penentu hidup gw ini."
-    louisa "kenalin—gw Louisa, mahasiswa semester---, gausa dibahas deh, ga mood.
-harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war gw duluan."
-    louisa "Hidup gw aman, damai sampe dosen bilang, ‘ini rivisinyi gimping kik’. Halahhh bullshit banget kayak mantan, dan yapss habis itu? Hidup gw langsung dibawa roller coaster tanpa safety belt."
 
-    louisa "Maju lo sini trio sableg!"
-    louisa "Gw bantai lo pada!"
+
+    
+    show louisa-nangis at posisi_mc,idle_mc
+    scene eileen movie
+    with dissolve
+    louisa "Kenapa ya kaki gw berat banget? Serius, jalan dari tangga ke ruang siding doang, rasanya kayak habis lomba panjat tebing."
+    hide louisa-nangis
+
+    show louisa-tengil at posisi_mc,idle_mc
+    louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?"
+    hide eileen movie
+    scene kampus 
+    hide louisa-tengil
+    show louisa-sombong at posisi_mc,idle_mc
+    
+    play music "sfx/desk-slam.mp3" noloop
+    with hpunch
+    
+    louisa "MUATAMU CUMA SIDANG.{w=1.0} penentu hidup gw ini."
+    
+    louisa "kenalin—gw Louisa, mahasiswa semester---, {w=1.0} gausa dibahas deh, ga mood."
+    louisa "harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war gw duluan."
+    louisa "Hidup gw aman, damai sampe dosen bilang.."
+    louisa "‘ini rivisinyi gimping kik’"
+    louisa"Halahhh bullshit banget kayak mantan.."
+    louisa "Dan hari ini… , my times is come. Jalan ke pintu sidang doang berasa kayak mau masuk arena gladiator."
+    louisa "Harapan gw simpel banget: lulus, senyum, pulang, turu."
+    hide louisa-sombong
 
     # show dosen with flash
     # pause 0.1
@@ -73,6 +92,7 @@ harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war
 
         renpy.say(None, f"Menggunakan file: {file_path}")
         renpy.say(None,"(Menganalisis PDF dan membuat daftar pertanyaan... Ini mungkin perlu waktu.)")
+
         
         try:
             file_name = file_path.split('/')[-1].split('\\')[-1]
@@ -100,10 +120,40 @@ harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war
 
         if quiz_ready:
             renpy.say(None,"Pertanyaan berhasil dibuat! Mari kita mulai kuisnya.")
-            renpy.jump("quiz_loop")
+            renpy.jump("opening_sidang")
+            
         else:
             renpy.say(None, "Gagal memuat kuis. Kembali ke awal.")
             renpy.jump("start")
+
+label opening_sidang:
+
+    show dospem-neutral at posisi_dosen with dissolve
+
+    # Menyapa
+    dospem "Baik, selamat siang. Sudah siap? Semoga lebih siap dari server API-mu yang suka error itu."
+
+    
+    dospem "Sebelum kita mulai, saya jelaskan aturan sidang—atau lebih tepatnya game yang akan kamu jalani hari ini."
+
+    dospem "Pertama, setiap pertanyaan punya waktu jawab. Kalau waktunya habis, ya anggap saja kamu tadi diam seribu bahasa."
+
+    dospem "Kedua, pilih jawaban yang paling tepat. Kalau salah, respect penguji otomatis turun. Begitu juga di dunia nyata sebenarnya."
+
+    dospem "Ketiga, beberapa penguji akan muncul secara acak. Jangan kaget. Kami memang seperti miniboss—muncul tiba-tiba, nanya tiba-tiba."
+
+    dospem "Keempat, jangan coba-coba skip. Ini bukan visual novel yang bisa kamu percepat, ini sidang."
+
+    # Menyatakan sidang dibuka
+    dospem "Jika semua sudah jelas, maka dengan ini sidang dinyatakan dibuka."
+
+    play music "sfx/start.mp3" noloop
+    with flash
+    with hpunch
+    hide dospem-neutral
+    jump quiz_loop
+
+
 
 label quiz_loop:
     
