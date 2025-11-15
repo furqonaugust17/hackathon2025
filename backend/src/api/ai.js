@@ -108,7 +108,7 @@ async function getQuestionsFromAI(text) {
     const systemPrompt = `Kamu adalah AI pembuat soal kuis akademik.
 - Buat sejumlah pertanyaan (sesuai permintaan user) berbasis teks yang diberikan.
 - Setiap pertanyaan harus memiliki 3 opsi jawaban (A, B, C) dan 1 jawaban benar.
-- Anda HARUS mengembalikan HANYA sebuah array JSON yang valid.
+- Anda HARUS mengembalikan HANYA sebuah array JSON yang valid, tanpa teks penjelasan apa pun sebelum atau sesudah array tersebut.
 - Format JSON: [{"question": "...", "options": [{"key": "A", "text": "..."}, ...], "correct_answer": "B"}]`;
     const userPrompt = `
 Berikut adalah teksnya:
@@ -215,9 +215,10 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
 - Dosen1: Tajam/sarkas
 - Dosen2: Humoris/nyeletuk
 - Dosen3: Kalem/logis
-- Mahasiswa: Netral/sopan
+- Mahasiswa: sombong ketika jawaban benar, gugup ketika jawaban salah
 - Contoh Gugup: 'Ma-maaf, saya belum terlalu mendalami materi'
-- Pose mahasiswa (louisa-nangis, louisa-nah, louisa-netral, louisa-sombong, louisa-tengil)
+- Contoh Sombong: 'oiya dong pak udah makan sehari hari saya ini'
+- Pose mahasiswa (louisa-nangis, louisa-dapat-ide, louisa-netral, louisa-sombong, louisa-tengil, louisa-kaget, louisa-bingung)
 - Pose Dosen1 (kesal, menyindir, santai, marah-besar, tegas, bentak, datar)
 - Pose Dosen2 (berpikir, bingung, cengengesan, kesal, menyindir, nyeletuk, tenang)
 - Pose Dosen3 (berpikir, datar, kesal, puas, senang, yakin)

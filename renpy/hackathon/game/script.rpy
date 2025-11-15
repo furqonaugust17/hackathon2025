@@ -17,8 +17,13 @@ define n = Character("narrator")
 define listDosen = [(dosen1, 'dosen'), (dosen2, 'dosen2'), (dosen3, 'dosen3')]
 define listLouisa4 = ['louisa-takut', 'louisa-nangis']
 define listLouisa7 = ['louisa-tengil', 'louisa-percaya-diri']
+image jefri_datar = "jefri/jefri-datar.png"
+image frank_datar = "frank/frank-datar.png"
+image bob_tenang = "bob/bob-tenang.png"
 
-image eileen movie = Movie(play="animation/vid.webm", size=(config.screen_width, config.screen_height))
+
+image eileen movie = Movie(play="animation/vidw.webm", size=(config.screen_width, config.screen_height))
+
 
 label start:
 
@@ -46,6 +51,9 @@ label start:
     hide louisa-nangis
 
     show louisa-tengil at posisi_mc,idle_mc
+    show jefri_datar at right,posisi_dosen,idle_dosen1
+    show frank_datar at right,posisi_dosen,idle_dosen1
+    show bob_tenang at right,posisi_dosen,idle_dosen1
     louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?"
     hide eileen movie
     scene kampus 
@@ -65,16 +73,143 @@ label start:
     louisa "Dan hari ini… , my times is come. Jalan ke pintu sidang doang berasa kayak mau masuk arena gladiator."
     louisa "Harapan gw simpel banget: lulus, senyum, pulang, turu."
     hide louisa-sombong
+    # =========================
+    # MENU: galau, songong, gugup
+    # =========================
+    menu:
+        louisa "Gimana mood gw masuk pintu ini?"
 
-    # show dosen with flash
-    # pause 0.1
-    # show dosen at komedi_pop with hpunch
-    # pause 0.1
-    # with vpunch
-    # hide dosen
+        "Sepi? Bagus. Artinya ruangan ini tau diri, nunggu gw masuk dulu sebelum mulai beraksi.
+        Kursi-kursinya aja sampe kayak nurut: ‘silakan duduk kalau kamu siap menguasai kami, my king’.":
+            jump scene1_optimis
+
+        "Sepi? Bagus. Artinya ruangan ini tau diri, nunggu gw masuk dulu sebelum mulai beraksi.
+        Kursi-kursinya aja sampe kayak nurut: ‘silakan duduk kalau kamu siap menguasai kami, my king’.": 
+            jump scene1_gugup
+
+        "Opsi songong":
+            jump scene1_songong
+
+
+# ================
+# SCENE 1 VERSI OPTIMIS
+# ================
+label scene1_optimis:
+
+    louisa "OKE GIRL THIS IS YOUR MOMENT. Ini panggung lo. Saatnya LO BERSINAR."
+    louisa "Dosennya nanya apa juga hayuk. Mental gw udah dilas."
+
+    jump scene2
+
+
+# ================
+# SCENE 1 VERSI GUGUP
+# ================
+label scene1_gugup:
+
+    louisa "Tarik napas… buang… oh my god jantung gw lari duluan."
+    louisa "Astagaa pintu aja bikin lutut gw geter. Masuk nih? masuk nggak ya—YA MASUK."
+
+    jump scene2
+
+
+# ================
+# SCENE 1 VERSI SONGONG
+# ================
+label scene1_songong:
+
+    louisa "HAHAHA pintu? Serius? PINTU aja lo pikir bisa ngehalangin gw?"
+    louisa "Gw masuk, ruangan geter woi. Ini sidang, bukan PvP ranked. Gw udah OP."
+
+    jump scene2
+
+
+# =========================
+# SCENE 2 — Masuk Ruangan Sendirian
+# Frame 5
+# =========================
+label scene2:
+
+    louisa "Beh… sepi amat. Kenapa ruangan sidang bisa nyeremin padahal kosong?"
+    louisa "Kursi-kursinya ngeliatin gw kayak bilang: ‘nih anak kuat gak ya mentalnya?’"
+    louisa "Belum mulai aja gw udah di-judge dekorasi ruangan."
+
+    # Menu Choice 2: Mood ruangan kosong
     
+    menu:
+        louisa "Gimana mood gw masuk pintu ini?"
+
+        "Opsi optimis":
+            jump scene2_optimis
+
+        "Opsi gugup":
+            jump scene2_gugup
+
+        "Opsi songong":
+            jump scene2_songong
+
+
+label scene2_optimis:
+    louisa "Oke, ruangan kosong. PERFECT. Waktu recharge aura dan latihan senyum dulu."
+    louisa "Kursi-kursinya kayak cheerleader bilang ‘GO LOUISA GO!’."
+    jump scene3
+
+
+label scene2_gugup:
+    louisa "YA AMPUN KOSONG?? Kenapa hening kayak film horor jam 2 pagi?!"
+    louisa "Kursi-kursinya kayak: ‘kasian nih anak, bentar lagi mentalnya hancur’."
+    jump scene3
+
+
+label scene2_songong:
+    louisa "Sepi? Bagus. Ruangan ini tau diri, nunggu gw masuk dulu."
+    louisa "Gw masuk, ruangan geter woi. Dosen nanya? Gw counter.Kursi-kursinya aja bilang: ‘silakan duduk kalau kamu siap menguasai kami, my king’."
+    jump scene3
+
+
+# =========================
+# SCENE 3 — DOSEN MASUK SATU PER SATU
+# =========================
+label scene3:
+
+    # Dosen 1 masuk
+    dosen1 "Selamat pagi. Louisa, ya? Sudah siap?"
+
+    louisa "Siap, Pak…"
+    louisa "(Suara bapak adem banget. Kayak marah pun tetep lembut.)"
+    louisa "(Please universe… vibes hari ini vibes beliau aja.)"
+
+    # Dosen 2 masuk
+    dosen2 "I mean… kalau ada dosen masuk sambil bawa kopi dan roti, berarti dunia belum sehancur itu."
+
+    louisa "Garing sih... tapi lumayan nurunin tegang."
+    louisa "Kalau ada dosen masuk bawa kopi dan roti, berarti dunia masih aman."
+
+    # Dosen 3 masuk (final boss)
+    dosen3 "Kenapa belum mulai? Mahasiswa sudah datang, kan? Cepat, jangan buang waktu."
+
+    louisa "…dan datanglah final boss-nya."
+    louisa "Dibilang: ‘beliau nggak marah kok… cuma pake tekanan jiwa’."
+    louisa "Tatapannya aja bikin sistem internal gw error."
+
+    jump scene4
+
+
+# =========================
+# SCENE 4 — KETIGANYA DUDUK
+# =========================
+label scene4:
+
+    dosen1 "Baik, Louisa. Kamu bisa mulai presentasinya."
+
+    louisa "Tiga pasang mata fokus ke gw. Vibes-nya beda semua: adem, chaotic, horor."
+    louisa "Gw berdiri kayak karakter game baru masuk cutscene."
+    louisa "Oke… deep breath. Game mulai."
+    louisa "Semoga gw keluar dari ruangan ini masih dalam bentuk manusia."
+
     louisa "Nih alasan gw kenapa revisi mulu."
-    
+
+
 
     
     
@@ -132,22 +267,19 @@ label opening_sidang:
 
     show dospem-neutral at posisi_dosen with dissolve
 
-    # Menyapa
-    dospem "Baik, selamat siang. Sudah siap? Semoga lebih siap dari server API-mu yang suka error itu."
+    dospem "Selamat siang, Louisa. Sudah siap? Semoga lebih siap dari server API-mu yang kemarin error terus."
 
-    
-    dospem "Sebelum kita mulai, saya jelaskan aturan sidang—atau lebih tepatnya game yang akan kamu jalani hari ini."
+    dospem "Baik, sebelum mulai, saya jelaskan aturan singkat sidang hari ini."
 
-    dospem "Pertama, setiap pertanyaan punya waktu jawab. Kalau waktunya habis, ya anggap saja kamu tadi diam seribu bahasa."
+    dospem "Pertama, setiap pertanyaan ada waktunya. Kalau lewat, ya dianggap nggak jawab."
 
-    dospem "Kedua, pilih jawaban yang paling tepat. Kalau salah, respect penguji otomatis turun. Begitu juga di dunia nyata sebenarnya."
+    dospem "Kedua, pilih jawaban yang tepat. Salah dikit, respect penguji turun—mirip real life lah."
 
-    dospem "Ketiga, beberapa penguji akan muncul secara acak. Jangan kaget. Kami memang seperti miniboss—muncul tiba-tiba, nanya tiba-tiba."
+    dospem "Ketiga, penguji bisa muncul dan nanya tiba-tiba. Anggap saja miniboss random spawn."
 
-    dospem "Keempat, jangan coba-coba skip. Ini bukan visual novel yang bisa kamu percepat, ini sidang."
+    dospem "Keempat, nggak ada skip. Ini sidang, bukan visual novel."
 
-    # Menyatakan sidang dibuka
-    dospem "Jika semua sudah jelas, maka dengan ini sidang dinyatakan dibuka."
+    dospem "Kalau semua jelas, dengan ini sidang saya nyatakan dibuka."
 
     play music "sfx/start.mp3" noloop
     with flash

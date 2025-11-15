@@ -1,10 +1,10 @@
 [
   {
-    "question": "Permasalahan utama apa yang berusaha diselesaikan oleh penelitian Ramadhan (2022) melalui pembangunan sistem informasi pengelolaan gadai berbasis web?",
+    "question": "Penelitian Ramadhan (2022) bertujuan untuk mengatasi permasalahan utama dalam pengelolaan bisnis penggadaian yang mana?",
     "options": [
       {
         "key": "A",
-        "text": "Kurangnya laporan aktivitas bisnis yang efisien."
+        "text": "Kurangnya integrasi dengan sistem pembayaran digital."
       },
       {
         "key": "B",
@@ -12,79 +12,79 @@
       },
       {
         "key": "C",
-        "text": "Kesulitan dalam mengintegrasikan sistem dengan notifikasi otomatis."
+        "text": "Keterbatasan fitur laporan keuangan bagi pemilik usaha."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Menurut Putra dan Hidayat (2023), mengapa framework CodeIgniter dipilih untuk mengembangkan sistem informasi gadai?",
+    "question": "Framework apa yang digunakan oleh Putra dan Hidayat (2023) dalam rancang bangun sistem informasi gadai, dan mengapa framework tersebut dipilih?",
     "options": [
       {
         "key": "A",
-        "text": "Karena CodeIgniter adalah satu-satunya framework yang mendukung basis data PostgreSQL."
+        "text": "Laravel, karena fitur ORM-nya yang canggih."
       },
       {
         "key": "B",
-        "text": "Karena memiliki performa yang ringan, dokumentasi yang lengkap, serta memudahkan proses pemeliharaan sistem."
+        "text": "CodeIgniter, karena memiliki performa ringan dan dokumentasi yang lengkap."
       },
       {
         "key": "C",
-        "text": "Karena hanya cocok untuk pengembangan sistem berskala kecil."
+        "text": "Yii2, karena kemampuannya dalam membangun API RESTful."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Apa tujuan utama dari integrasi WhatsApp Gateway pada sistem informasi yang dikembangkan oleh Lestari (2024)?",
+    "question": "Berdasarkan penelitian Lestari (2024), apa manfaat utama dari integrasi WhatsApp Gateway pada sistem informasi?",
     "options": [
       {
         "key": "A",
-        "text": "Untuk meningkatkan kecepatan pemrosesan data transaksi gadai."
+        "text": "Mengurangi biaya operasional perusahaan secara signifikan."
       },
       {
         "key": "B",
-        "text": "Untuk mengirimkan notifikasi otomatis kepada pengguna sebagai sarana komunikasi real-time."
+        "text": "Meningkatkan efektivitas komunikasi antara sistem dan pengguna serta mengurangi beban kerja petugas administrasi."
       },
       {
         "key": "C",
-        "text": "Untuk memudahkan petugas administrasi dalam mencatat data nasabah."
+        "text": "Memungkinkan pengiriman promosi dan diskon kepada nasabah secara massal."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Berdasarkan definisi Jogiyanto (2019), unsur-unsur apa saja yang membentuk suatu sistem informasi?",
+    "question": "Menurut Jogiyanto (2019), apa peran penting sistem informasi dalam suatu organisasi?",
     "options": [
       {
         "key": "A",
-        "text": "Hanya perangkat lunak, data, dan prosedur."
+        "text": "Untuk mengelola aset fisik perusahaan secara otomatis."
       },
       {
         "key": "B",
-        "text": "Perangkat keras, perangkat lunak, data, prosedur, serta sumber daya manusia."
+        "text": "Untuk mendukung efektivitas dan efisiensi kegiatan operasional perusahaan."
       },
       {
         "key": "C",
-        "text": "Perangkat keras, data, dan sumber daya manusia saja."
+        "text": "Untuk menggantikan seluruh pekerjaan sumber daya manusia."
       }
     ],
     "correct_answer": "B"
   },
   {
-    "question": "Mengapa PostgreSQL dipilih sebagai sistem manajemen basis data dalam sistem pengelolaan bisnis penggadaian ini?",
+    "question": "Sistem informasi pengelolaan gadai dirancang untuk mempermudah pengelolaan aktivitas bisnis pada lembaga penggadaian. Aktivitas apa saja yang dicakup oleh sistem ini?",
     "options": [
       {
         "key": "A",
-        "text": "Karena hanya mendukung tipe data sederhana dan mudah dipelajari."
+        "text": "Hanya pencatatan data nasabah dan barang gadai."
       },
       {
         "key": "B",
-        "text": "Karena unggul dalam stabilitas dan performa, serta memiliki kompatibilitas tinggi dengan framework CodeIgniter 4."
+        "text": "Pencatatan data nasabah, data barang gadai, transaksi gadai, pelunasan, hingga pelaporan."
       },
       {
         "key": "C",
-        "text": "Karena tidak memerlukan integritas transaksi."
+        "text": "Hanya pengiriman notifikasi otomatis kepada nasabah."
       }
     ],
     "correct_answer": "B"
