@@ -15,11 +15,12 @@ define dosen3 = Character("Dosen 3 (Kalem)", color="#90EE90", callback=type_soun
 define dospem = Character("Dospem", color="#FFFFA0", callback=type_sound)
 define n = Character("narrator")
 
+image eileen movie = Movie(play="animation/vide.webm", size=(config.screen_width, config.screen_height))
+
 label start:
 
-    
+    scene kampus 
 
-    scene kampus
     with fade
     show screen respect_bar
     show screen confidence_bar
@@ -32,15 +33,28 @@ label start:
     # else:
     #     # show dosen2 at posisi_dosen,right,idle_dosen2
     #     show dosen2 at posisi_mc,left,idle_dosen1
-    
+
+
+    # scene eileen movie
+    show louisa-sad at posisi_mc,idle_mc 
+    with dissolve
     louisa "Kenapa ya kaki gw berat banget? Serius, jalan dari tangga ke ruang siding doang, rasanya kayak habis lomba panjat tebing."
-    louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?,{w=1.0} MUATAMU CUMA SIDANG.{w=1.0} penentu hidup gw ini."
+    hide louisa-sad
+
+    show louisa-tengil at posisi_mc,idle_mc
+    louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?"
+
+    hide louisa-tengil
+    show louisa-sombong at posisi_mc,idle_mc
+    with hpunch
+
+    louisa "MUATAMU CUMA SIDANG.{w=1.0} penentu hidup gw ini."
+
     louisa "kenalin—gw Louisa, mahasiswa semester---, gausa dibahas deh, ga mood.
 harusnya sih udah kelar war sama revisi… tapi kenyataannya revisi yang nge-war gw duluan."
     louisa "Hidup gw aman, damai sampe dosen bilang, ‘ini rivisinyi gimping kik’. Halahhh bullshit banget kayak mantan, dan yapss habis itu? Hidup gw langsung dibawa roller coaster tanpa safety belt."
-
-    louisa "Maju lo sini trio sableg!"
-    louisa "Gw bantai lo pada!"
+    louisa "Dan hari ini… , my times is come. Jalan ke pintu sidang doang berasa kayak mau masuk arena gladiator."
+    louisa "Harapan gw simpel banget: lulus, senyum, pulang, turu."
 
     # show dosen with flash
     # pause 0.1
