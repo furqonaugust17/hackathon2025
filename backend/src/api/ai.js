@@ -217,7 +217,7 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
 - Dosen3: Kalem/logis
 - Mahasiswa: Netral/sopan
 - Contoh Gugup: 'Ma-maaf, saya belum terlalu mendalami materi'
-- Pose mahasiswa (louisa-nangis, louisa-nah, louisa-netral, louisa-sombong, louisa-tengil)
+- Pose mahasiswa (louisa-nangis, louisa-dapat-ide, louisa-netral, louisa-sombong, louisa-tengil)
 - ATURAN:
   1. MAKSIMAL 2 dosen berbicara.
   2. Dialog jangan terlalu kaku. santai tetapi masih suasana akademik
