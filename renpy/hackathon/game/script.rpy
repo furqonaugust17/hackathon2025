@@ -163,7 +163,8 @@ label quiz_loop:
     python:
         import random
         for i, q in enumerate(store.quiz_questions):
-            
+            time = 5
+            timer_range = 5
             rand_dosen = random.choice(listDosen)
             renpy.show(rand_dosen[1], at_list=[right,posisi_dosen])
             renpy.say(rand_dosen[0], f"{q['question']}")
@@ -171,6 +172,7 @@ label quiz_loop:
             menu_options = [(opt['text'], opt['key']) for opt in q['options']]
             
 
+            renpy.show_screen('countdown')
             choice = renpy.display_menu(menu_options)
             renpy.hide(rand_dosen[1])
             renpy.with_statement(dissolve)
@@ -182,6 +184,8 @@ label quiz_loop:
                 if t[1] == choice:
                     result = t
             
+
+            renpy.hide_screen('countdown')
             renpy.show('louisa-nah', at_list=[posisi_mc,idle_mc])
             renpy.say(louisa, result[0])
             renpy.show("eileen movie")
@@ -229,6 +233,10 @@ label quiz_loop:
                 renpy.show(store.current_dialogue['mahasiswa'][0], at_list=[posisi_mc])
                 renpy.say(louisa, store.current_dialogue['mahasiswa'][1])
                 
+            if(time >= 2 and is_correct):
+                confidence_value += 10
+            else:
+                confidence_value -= 10
 
             if is_correct:
                 respect = min(max_respect, respect + respectOperation)
