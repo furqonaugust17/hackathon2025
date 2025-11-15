@@ -32,7 +32,7 @@ screen respect_bar:
             ysize 20
             xsize 300
 
-define confidence_bar = 50
+define confidence_bar = 80
 define max_confidence_bar = 100
 
 screen confidence_bar():
