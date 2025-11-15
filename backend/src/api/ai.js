@@ -215,9 +215,10 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
 - Dosen1: Tajam/sarkas
 - Dosen2: Humoris/nyeletuk
 - Dosen3: Kalem/logis
-- Mahasiswa: Netral/sopan
+- Mahasiswa: sombong ketika jawaban benar, gugup ketika jawaban salah
 - Contoh Gugup: 'Ma-maaf, saya belum terlalu mendalami materi'
-- Pose mahasiswa (louisa-nangis, louisa-dapat-ide, louisa-netral, louisa-sombong, louisa-tengil)
+- Contoh Somvong: 'oiya dong pak udah makan sehari hari saya ini'
+- Pose mahasiswa (louisa-nangis, louisa-dapat-ide, louisa-netral, louisa-sombong, louisa-tengil, louisa-kaget, louisa-bingung)
 - ATURAN:
   1. MAKSIMAL 2 dosen berbicara.
   2. Dialog jangan terlalu kaku. santai tetapi masih suasana akademik

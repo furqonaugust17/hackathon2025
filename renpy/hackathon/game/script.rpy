@@ -130,22 +130,19 @@ label opening_sidang:
 
     show dospem-neutral at posisi_dosen with dissolve
 
-    # Menyapa
-    dospem "Baik, selamat siang. Sudah siap? Semoga lebih siap dari server API-mu yang suka error itu."
+    dospem "Selamat siang, Louisa. Sudah siap? Semoga lebih siap dari server API-mu yang kemarin error terus."
 
-    
-    dospem "Sebelum kita mulai, saya jelaskan aturan sidang—atau lebih tepatnya game yang akan kamu jalani hari ini."
+    dospem "Baik, sebelum mulai, saya jelaskan aturan singkat sidang hari ini."
 
-    dospem "Pertama, setiap pertanyaan punya waktu jawab. Kalau waktunya habis, ya anggap saja kamu tadi diam seribu bahasa."
+    dospem "Pertama, setiap pertanyaan ada waktunya. Kalau lewat, ya dianggap nggak jawab."
 
-    dospem "Kedua, pilih jawaban yang paling tepat. Kalau salah, respect penguji otomatis turun. Begitu juga di dunia nyata sebenarnya."
+    dospem "Kedua, pilih jawaban yang tepat. Salah dikit, respect penguji turun—mirip real life lah."
 
-    dospem "Ketiga, beberapa penguji akan muncul secara acak. Jangan kaget. Kami memang seperti miniboss—muncul tiba-tiba, nanya tiba-tiba."
+    dospem "Ketiga, penguji bisa muncul dan nanya tiba-tiba. Anggap saja miniboss random spawn."
 
-    dospem "Keempat, jangan coba-coba skip. Ini bukan visual novel yang bisa kamu percepat, ini sidang."
+    dospem "Keempat, nggak ada skip. Ini sidang, bukan visual novel."
 
-    # Menyatakan sidang dibuka
-    dospem "Jika semua sudah jelas, maka dengan ini sidang dinyatakan dibuka."
+    dospem "Kalau semua jelas, dengan ini sidang saya nyatakan dibuka."
 
     play music "sfx/start.mp3" noloop
     with flash
@@ -235,7 +232,7 @@ label quiz_loop:
                 correct_answers += 1
             else:
                 respect -= respectOperation
-            renpy.hide(store.current_dialogue['mahasiswa'][0])
+                renpy.hide(store.current_dialogue['mahasiswa'][0])
             
     
     jump quiz_complete
