@@ -46,6 +46,7 @@ screen respect_bar:
 
 default confidence_value = 80
 define max_confidence_bar = 100
+define confidenceOperation = 10
 
 screen confidence_bar():
     frame:
