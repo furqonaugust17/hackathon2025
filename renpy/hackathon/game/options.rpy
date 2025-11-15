@@ -12,6 +12,18 @@
 
 ### Bars ######################################################################################
 
+define timer_range = 0
+define timer_jump = 0
+transform alpha_dissolve:
+    alpha 0.0
+    linear 0.5 alpha 1.0
+    on hide:
+        linear 0.5 alpha 0
+    # This is to fade the bar in and out, and is only required once in your script
+
+screen countdown:
+    timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[])
+    bar value time range timer_range xalign 0.5 yalign 0.1 xmaximum 600 at alpha_dissolve # This is the timer bar.
 
 
 default respect = 50
@@ -33,7 +45,7 @@ screen respect_bar:
             ysize 20
             xsize 300
 
-define confidence_bar = 80
+default confidence_value = 80
 define max_confidence_bar = 100
 
 screen confidence_bar():
@@ -50,7 +62,7 @@ screen confidence_bar():
 
         # Bar itu sendiri
         bar:
-            value confidence_bar
+            value confidence_value
             range max_confidence_bar
             xsize 300
             ysize 20
@@ -93,13 +105,14 @@ transform idle_dosen3:
 
 
 transform posisi_mc:
-    xalign -0.1
+    xalign 0.0
     zoom 0.8   # 0.5 = 50% ukuran
     yoffset 100  # Geser ke bawah sebanyak 100 piksel
     
 transform posisi_dosen:
-    zoom 0.6   # 0.5 = 50% ukuran
-    yoffset 300  # Geser ke bawah sebanyak 100 piksel
+    zoom 0.8   # 0.5 = 50% ukuran
+    yoffset 500  # Geser ke bawah sebanyak 100 piksel
+
 #end transform##############################################################################
 
 
