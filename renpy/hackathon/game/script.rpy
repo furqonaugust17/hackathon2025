@@ -51,9 +51,7 @@ label start:
     hide louisa-nangis
 
     show louisa-tengil at posisi_mc,idle_mc
-    show jefri_datar at right,posisi_dosen,idle_dosen1
-    show frank_datar at right,posisi_dosen,idle_dosen1
-    show bob_tenang at right,posisi_dosen,idle_dosen1
+
     louisa "Padahal ini cuma sidang…{w=1.0} cuma sidang?"
     hide eileen movie
     scene kampus 
