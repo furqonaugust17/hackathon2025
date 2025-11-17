@@ -232,7 +232,7 @@ async function getDialogueForAnswer(questionText, playerAnswer, isCorrect) {
   7. Semua dialog SANGAT RINGKAS (maks 15 kata).
   8. Gunakan narasi singkat (cth: (tersenyum miring)).
   9. ketika ada jawaban, jangan ambil B. tetapi bisa ganti dengan "itu", "jawaban tersebut" dan atau bisa kalimat dari jawabannya (jangan terlalu kaku) 
-  10. buatkan pose untuk mahasiswa dan dosen berdasarkan pose yang ada, pose harus sesuai dengan respon yang diberikan. jangan gabungkan dengan string respon. pastikan berada pada index 0. dan jangan pakai tanda kurung '()'
+  10. buatkan pose untuk mahasiswa dan dosen berdasarkan pose yang ada, pose harus sesuai dengan respon yang diberikan. jangan gabungkan dengan string respon. pastikan berada pada index 0. dan jangan pakai tanda kurung '()'. INGAT POSE HARUS SESUAI DENGAN LIST YANG ADA.
 - Anda HARUS mengembalikan HANYA satu objek JSON (bukan array).
 - Format: {"dosen1": ["..."], "dosen2": [""], "dosen3": ["..."], "mahasiswa": ["..."]}`;
 

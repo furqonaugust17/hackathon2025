@@ -32,7 +32,7 @@ define respectOperation = 10
 
 screen respect_bar:
     frame:
-        xalign 0.9
+        xalign 0.85
         yalign 0.1
         xminimum 300
         yminimum 40
@@ -51,7 +51,7 @@ define confidenceOperation = 10
 
 screen confidence_bar():
     frame:
-        xalign 0.13
+        xalign 0.18
         yalign 0.1
         xminimum 300
         yminimum 40
@@ -74,14 +74,21 @@ screen confidence_bar():
 
 #transform chara###############################################################################
 
-transform komedi_pop:
-    yalign 1.5
-    zoom 0.7
-    easeout_back .3 yalign 0.5 zoom 1.0
-    on show:
-        linear .05 xoffset -8
-        linear .05 xoffset 8
-        linear .05 xoffset 0
+transform hshake(duration=0.25, *, old_widget=None, new_widget=None):
+    delay duration
+
+    # Shake the old scene horizontally
+    old_widget
+    xoffset 0
+    ease (duration/4) xoffset -15
+    ease (duration/4) xoffset 15
+    ease (duration/4) xoffset -10
+    ease (duration/4) xoffset 10
+    xoffset 0
+
+    # Show new scene normally
+    new_widget
+
 
 transform idle_mc:
     linear 1.2 yoffset -6
